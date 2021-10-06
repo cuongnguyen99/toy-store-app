@@ -1,12 +1,47 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Button from './components/Button';
+import Category from './components/Category';
+import color from './config/colors';
+import WelcomeScreen from './screens/WelcomeCreen';
 
 export default function App() {
   return (
+    // Product type list
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <ScrollView style={styles.scrollview}>
+      <Category
+        title = "Sport"
+        image = {require("./assets/images/sport.jpg")}
+      >
+      </Category>
+      <Category
+        title = "Sport"
+        image = {require("./assets/images/sport.jpg")}
+      >
+      </Category>
+      <Category
+        title = "Sport"
+        image = {require("./assets/images/sport.jpg")}
+      >
+      </Category>
+      <Category
+        title = "Sport"
+        image = {require("./assets/images/sport.jpg")}
+      >
+      </Category>
+      <Category
+        title = "Sport"
+        image = {require("./assets/images/sport.jpg")}
+      >
+      </Category>
+      <Category
+        title = "Sport"
+        image = {require("./assets/images/sport.jpg")}
+      >
+      </Category>
+      </ScrollView>
     </View>
   );
 }
@@ -14,8 +49,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    paddingTop: 50
   },
+  scrollview:{
+    paddingLeft: 20,
+    paddingRight: 20
+  }
 });
