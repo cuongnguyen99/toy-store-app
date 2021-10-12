@@ -6,9 +6,10 @@ const color = {
     background: "#f6f6f6",
     sub_background: "#fcfcfc",
     icon_background: "#D8D8D8",
+    sale: "#d90008",
     shadow: "#767676",
     white: "#ffffff",
-    black: "#000000"
+    black: "#000000",
 }
 
 export default color;
