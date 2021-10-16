@@ -31,7 +31,7 @@ function Product({image, title, price, onSale=null}) {
                                 onSale ? {textDecorationLine: 'line-through'} : {textDecorationLine: 'none'}
                             ]}
                         >
-                            {price}
+                            {price}$
                         </AppText>
                     </View>
                 </View>
