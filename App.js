@@ -11,6 +11,7 @@ import CategoryListScreen from './screens/CategoryListScreen';
 import Product from './components/Product';
 import ListProductScreen from './screens/ListProductScreen';
 import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 export default function App() {
   return (

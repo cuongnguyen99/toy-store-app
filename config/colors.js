@@ -10,6 +10,7 @@ const color = {
     sale: "#d90008",
     white: "#ffffff",
     black: "#000000",
+    google: "#4281e5"
 }
 
 export default color;

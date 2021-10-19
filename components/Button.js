@@ -1,15 +1,18 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, View, Text, Touchable, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text,TouchableOpacity } from 'react-native';
 import color from '../config/colors';
 
-function Button({title, background}){
+function Button({title, background, icon, onPress}){
     return(
-        <TouchableOpacity 
+        <TouchableOpacity onPress={onPress}
             activeOpacity = {0.7}
             style = {[
                 styles.button, 
                 background ? {backgroundColor: background} : {backgroundColor: color.primary} 
             ]}>
+            {/* {icon && <MaterialCommunityIcons icon={icon} size={40} color={color.white}/>} */}
+            <MaterialCommunityIcons style={styles.icon} name={icon} size={40} color={color.white}/>
             <Text
                 style={styles.text}
             >{title}</Text>
@@ -26,11 +29,16 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         alignItems: "center",
         justifyContent: "center",
+        flexDirection: 'row'
     },
     text: {
         fontSize: 18,
         color: color.white,
-        fontWeight: "bold"
+        fontWeight: "bold",
+    },
+    icon: {
+        position: 'absolute',
+        left: 20
     }
 })
 
