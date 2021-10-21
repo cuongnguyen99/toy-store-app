@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image,ImageBackground, StyleSheet, View, Text} from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import Toast from 'react-native-simple-toast';
 
 import AppTextInput from '../components/AppTextInput';
 import Button from '../components/Button';
@@ -16,10 +17,47 @@ const validationSchema = Yup.object().shape({
 })
 
 function LoginScreen() {
-    // On Press Sign In Button
-    const onSubmit = (params) => {
-        console.log(params);
+    const apiUrl = "https://6171698bc20f3a001705fcb1.mockapi.io/api/users";
+    const [isLoading, setLoading] = useState(true);
+    const [users, setUsers] = useState([]);
+
+    const getUsers = async () => {
+        try {
+            const res = await fetch(apiUrl);
+            const datas = await res.json();
+
+            setUsers(datas);
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setLoading(false);
+          }
     }
+    // On Press Sign In Button
+    const onSubmit = async (user) => {
+        var check = users.some(item => {
+            if(item.username == user.username)
+            {
+                if(item.password == user.password)
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        })
+        
+        if(check) {
+            Toast.showWithGravity("Xác thực tài khoản thành công!", Toast.LONG, Toast.TOP);
+        }
+        else {
+            Toast.showWithGravity("Tài khoản hoặc mật khẩu chưa chính xác!", Toast.LONG, Toast.TOP);
+        }
+    }
+
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     return(
         <Screen
@@ -101,16 +139,16 @@ const styles = StyleSheet.create({
     label: {
         fontSize : 16,
         color: color.text,
+        margin: 0,
         marginLeft: 10,
         marginBottom: 2,
         fontWeight: '700',
-        lineHeight: 14
+        lineHeight: 16
     },
     warning: {
         color: 'red',
-        marginBottom: 0,
         paddingLeft: 10,
-        fontSize: 15
+        fontSize: 14
     }
 });
 

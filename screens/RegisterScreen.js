@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Image} from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import Toast from 'react-native-simple-toast';
 
 import Button from '../components/Button';
 import Screen from './Screen';
@@ -19,19 +20,50 @@ const registerSchema = Yup.object().shape({
 });
 
 function RegisterScreen() {
-    // On Press Sign In Button
-    const onSubmit = async (params) => {
-        try {
-            const response = await fetch('https://reactnative.dev/movies.json');
-            const json = await response.json();
+    const apiUrl = "https://6171698bc20f3a001705fcb1.mockapi.io/api/";
+    const [isLoading, setLoading] = useState(true);
+    const [users, setUsers] = useState([]);
+    const [account, setAccount] = useState({});
 
-            console.log(json);
+    const getUser = async () => {
+        try {
+            const res = await fetch(apiUrl + "registers");
+            const datas = await res.json();
+
+            setUsers(datas);
           } catch (error) {
             console.error(error);
-          } //finally {
-        //     setLoading(false);
-        //   }
+          } finally {
+            setLoading(false);
+          }
     }
+
+    const postUser = async (user) => {
+        const requestOption = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        };
+        await fetch(apiUrl + "registers", requestOption);
+    }
+
+    // On Press Sign In Button
+    const onSubmit = async (user) => {
+        var check = users.every(item => {
+            return item.username != user.username; 
+        })
+        if(check) {
+            await postUser(user);
+            Toast.showWithGravity("Đăng ký tài khoản thành công!", Toast.LONG, Toast.BOTTOM);
+        }
+        else {
+            Toast.showWithGravity("Tài khoản đã tồn tại!", Toast.LONG, Toast.BOTTOM);
+        }
+    }
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
     return (
         <Screen style={styles.register}>
@@ -154,9 +186,8 @@ const styles = StyleSheet.create({
     },
     warning: {
         color: 'red',
-        marginBottom: 2,
         paddingLeft: 10,
-        fontSize: 15
+        fontSize: 14
     },
     label: {
         fontSize : 16,
@@ -164,7 +195,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginBottom: 1,
         fontWeight: '700',
-        lineHeight: 14
+        lineHeight: 16
     },
     
 })
