@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
         color: color.text,
         marginLeft: 10,
         marginBottom: 2,
-        fontWeight: '700'
+        fontWeight: '700',
+        lineHeight: 14
     },
     warning: {
         color: 'red',
