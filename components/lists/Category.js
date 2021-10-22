@@ -1,6 +1,7 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import color from '../config/colors';
+
+import color from '../../config/colors';
 
 function Category({title,image}) {
     return(

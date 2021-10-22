@@ -1,7 +1,8 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, View, Text,TouchableOpacity } from 'react-native';
-import color from '../config/colors';
+import { StyleSheet, Text,TouchableOpacity } from 'react-native';
+
+import color from '../../config/colors';
 
 function Button({title, background, icon, onPress}){
     return(

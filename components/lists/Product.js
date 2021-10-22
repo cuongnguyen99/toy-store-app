@@ -1,9 +1,8 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { View, StyleSheet, Image, ImageBackground, TouchableHighlight } from 'react-native';
 
-import color from '../config/colors';
-import AppText from './AppText';
+import { AppText } from '../common';
+import color from '../../config/colors';
 
 const heightProduct = 320;
 const heightImg = (320/100)*70;

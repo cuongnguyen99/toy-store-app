@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 
-import styles from "../config/styles";
+import styles from "../../config/styles";
 
 function AppText({children, style, lineNumber=null}) {
     return (

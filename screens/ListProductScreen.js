@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
-import Product from '../components/Product';
+import {Product } from '../components/lists';
 import Screen from './Screen';
 
 const products = [

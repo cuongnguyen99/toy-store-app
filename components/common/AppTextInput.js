@@ -1,6 +1,6 @@
 import React from 'react';
 import {TextInput, StyleSheet} from 'react-native';
-import color from '../config/colors';
+import color from '../../config/colors';
 
 
 function AppTextInput({style, content, security = false, keyboard = "default", onChangeText, onBlur}) {

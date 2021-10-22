@@ -4,12 +4,10 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Toast from 'react-native-simple-toast';
 
-import AppTextInput from '../components/AppTextInput';
-import Button from '../components/Button';
-import HairLine from '../components/HairLine';
+import {AppTextInput, Button, AppText} from '../components/common';
+import { HairLine } from '../components/lists';
 import Screen from './Screen';
 import color from '../config/colors';
-import AppText from '../components/AppText';
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().required('Please enter the username'),

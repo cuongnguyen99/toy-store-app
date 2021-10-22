@@ -4,10 +4,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Toast from 'react-native-simple-toast';
 
-import Button from '../components/Button';
+import {Button, AppTextInput, AppText} from '../components/common'
 import Screen from './Screen';
-import AppTextInput from '../components/AppTextInput';
-import AppText from '../components/AppText';
 import color from '../config/colors';
 
 const registerSchema = Yup.object().shape({
