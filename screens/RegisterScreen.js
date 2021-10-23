@@ -84,7 +84,6 @@ function RegisterScreen() {
                 { ({handleChange, handleSubmit, setFieldTouched, touched, errors}) => (
                     <>
                         <View style={styles.registerForm}>
-                            <AppText style={styles.label}>Username</AppText>
                             <AppTextInput 
                                 content="Username" 
                                 style={styles.textInput}
@@ -92,28 +91,25 @@ function RegisterScreen() {
                                 onBlur={() => setFieldTouched("username")}
                             />
                             <AppText style={styles.warning}>{touched.username && errors.username ? errors.username : null}</AppText>
-
-                            <AppText style={styles.label}>Password</AppText>
+   
                             <AppTextInput 
                                 content="Password" 
                                 style={styles.textInput} 
-                                security={true}
+                                secureTextEntry={true}
                                 onChangeText={handleChange("password")}
                                 onBlur={() => setFieldTouched("password")}
                             />
                             <AppText style={styles.warning}>{touched.password && errors.password ? errors.password : null}</AppText>
 
-                            <AppText style={styles.label}>Confirm Password</AppText>
                             <AppTextInput 
                                 content="Confirm Password" 
                                 style={styles.textInput} 
-                                security={true}
+                                secureTextEntry={true}
                                 onChangeText={handleChange("passwordConfirm")}
                                 onBlur={() => setFieldTouched("passwordConfirm")}
                             />
                             <AppText style={styles.warning}>{touched.passwordConfirm && errors.passwordConfirm ? errors.passwordConfirm : null}</AppText>
 
-                            <AppText style={styles.label}>Full Name</AppText>
                             <AppTextInput 
                                 content="Full Name" 
                                 style={styles.textInput}
@@ -122,20 +118,19 @@ function RegisterScreen() {
                             />
                             <AppText style={styles.warning}>{touched.fullname && errors.fullname ? errors.fullname : null}</AppText>
 
-                            <AppText style={styles.label}>Email</AppText>
                             <AppTextInput 
                                 content="Email" 
                                 style={styles.textInput}
+                                keyboardType="email-address"
                                 onChangeText={handleChange("email")}
                                 onBlur={() => setFieldTouched("email")}
                             />
                             <AppText style={styles.warning}>{touched.email && errors.email ? errors.email : null}</AppText>
 
-                            <AppText style={styles.label}>Phone Number</AppText>
                             <AppTextInput 
                                 content="Phone Number" 
                                 style={styles.textInput} 
-                                keyboard="number-pad"
+                                keyboardType="number-pad"
                                 onChangeText={handleChange("phonenumber")}
                                 onBlur={() => setFieldTouched("phonenumber")}
                             />

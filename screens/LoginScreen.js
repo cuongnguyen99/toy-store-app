@@ -73,7 +73,6 @@ function LoginScreen() {
                 { ({handleChange, handleSubmit, setFieldTouched, touched,errors}) => (
                     <>
                         <View style={styles.input}>
-                            <AppText style={styles.label}>Username</AppText>
                             <AppTextInput 
                                 content="Username" 
                                 onChangeText={handleChange("username")}
@@ -81,10 +80,9 @@ function LoginScreen() {
                             />
                             <AppText style={styles.warning}>{touched.username && errors.username ? errors.username : null}</AppText>
 
-                            <AppText style={styles.label}>Password</AppText>
                             <AppTextInput 
                                 content="Password" 
-                                security={true}
+                                secureTextEntry={true}
                                 onChangeText={handleChange("password")}
                                 onBlur={() => setFieldTouched("password")}
                             />

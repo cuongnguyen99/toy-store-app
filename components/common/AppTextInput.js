@@ -3,7 +3,7 @@ import {TextInput, StyleSheet} from 'react-native';
 import color from '../../config/colors';
 
 
-function AppTextInput({style, content, security = false, keyboard = "default", onChangeText, onBlur}) {
+function AppTextInput({style, content, ...otherProps}) {
     return (
         <TextInput 
             style={[styles.input, style]}
@@ -11,10 +11,7 @@ function AppTextInput({style, content, security = false, keyboard = "default", o
             placeholderTextColor={color.sub_text}
             numberOfLines={1}
             disableFullscreenUI={true}
-            keyboardType={keyboard}
-            secureTextEntry={security}
-            onChangeText={onChangeText}
-            onBlur={onBlur}
+            {...otherProps}
         />
     );
 }
@@ -28,7 +25,8 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         borderRadius: 30,
         color: color.text,
-        fontSize: 16
+        fontSize: 16,
+        paddingRight: 15
     }
 })
 
