@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image,ImageBackground, StyleSheet, View, Text} from 'react-native';
+import { Image,ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Toast from 'react-native-simple-toast';
@@ -53,6 +53,16 @@ function LoginScreen() {
         }
     }
 
+    // When click on register text
+    const onRegisterPress = () => {
+        console.log("Register button");
+    }
+
+    // When click on forget password text
+    const onForgetPasswordPress = () => {
+        console.log("Forget password button");
+    }
+
     useEffect(() => {
         getUsers();
     }, []);
@@ -87,15 +97,25 @@ function LoginScreen() {
                                 onBlur={() => setFieldTouched("password")}
                             />
                             <AppText style={styles.warning}>{touched.password && errors.password ? errors.password : null}</AppText>
+
+                            <View style={styles.passAndRegister}>
+                                <TouchableOpacity activeOpacity={0.5} onPress={onRegisterPress}>
+                                    <AppText style={styles.pnrInner}>Đăng ký</AppText>
+                                </TouchableOpacity>
+                                <TouchableOpacity activeOpacity={0.5} onPress={onForgetPasswordPress}>
+                                    <AppText style={styles.pnrInner}>Quên mật khẩu?</AppText>
+                                </TouchableOpacity>
+                            </View>
+                            
                         </View>
                         <View style={styles.buttonContainer}>
                             <Button 
-                                title="Sign in"
+                                title="Đăng nhập"
                                 onPress={handleSubmit}
                             />
                             <HairLine content="Or"/>
                             <Button 
-                                title="Sign in with Google"
+                                title="Đăng nhập với Google"
                                 icon="google-plus"
                                 background={color.google}
                             />
@@ -145,6 +165,18 @@ const styles = StyleSheet.create({
         color: 'red',
         paddingLeft: 10,
         fontSize: 14
+    },
+    passAndRegister: {
+        width: "100%",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 15,
+    },
+    pnrInner: {
+        color: color.google,
+        fontWeight: 'bold',
+        fontSize: 15
     }
 });
 

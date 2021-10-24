@@ -13,9 +13,9 @@ function ListItemSeparator() {
 const styles = StyleSheet.create({
     separator: {
         backgroundColor: color.sub_text,
-        width: "95%",
+        width: "93%",
         height: 1,
-        marginLeft: "2.5%"
+        marginLeft: "4%"
     }
 })
 

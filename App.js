@@ -13,8 +13,8 @@ import color from './config/colors';
 
 export default function App() {
   return (
-    // <LoginScreen/>
+    <LoginScreen/>
     // <RegisterScreen/>
-    <ProfileScreen/>
+    // <ProfileScreen/>
   );
 }

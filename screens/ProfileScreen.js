@@ -1,7 +1,7 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
-import { AppText, Icon } from '../components/common';
+import { AppText, Button, Icon } from '../components/common';
 import { ListItem } from '../components/lists';
 import ListItemSeparator from '../components/lists/ListItemSeparator';
 import color from '../config/colors';
@@ -43,7 +43,7 @@ function ProfileScreen() {
     return (
         <Screen style={styles.screen}>
             <TouchableOpacity style={styles.backBtn}>
-                <Icon name="arrow-left" size={70} iconColor={color.black} backgroundColor={color.background}/>
+                <MaterialIcons name="keyboard-backspace" size={40}/>
             </TouchableOpacity>
             <View style={styles.container}>
                 <Icon style={styles.icon} name="account" backgroundColor={color.shadow} size={120} iconColor="#ecf0f1"/>
@@ -53,14 +53,17 @@ function ProfileScreen() {
                     <ListItem style={styles.listingItem} title="Thông tin cá nhân" iconComponent={<MaterialCommunityIcons size={32} name="account-edit" color="#2980b9"/>}/>
                     <ListItemSeparator/>
                     
-                    <ListItem style={styles.listingItem} title="Giỏ hàng" iconComponent={<MaterialCommunityIcons size={32} name="cart" color="#d63031"/>}/>
+                    <ListItem style={styles.listingItem} title="Giỏ hàng" iconComponent={<MaterialCommunityIcons size={32} name="cart" color="#2ed573"/>}/>
                     <ListItemSeparator/>
 
-                    <ListItem style={styles.listingItem} title="Đơn mua" iconComponent={<MaterialCommunityIcons size={32} name="clipboard-text" iconColor="#f9ca24"/>}/>
+                    <ListItem style={styles.listingItem} title="Đơn mua" iconComponent={<MaterialCommunityIcons size={32} name="clipboard-text" color="#d63031"/>}/>
                     <ListItemSeparator/>
 
-                    <ListItem style={styles.listingItem} title="Đăng xuất" iconComponent={<MaterialCommunityIcons size={32} name="logout" iconColor="#4834d4"/>}/>
+                    <ListItem style={styles.listingItem} title="Đổi mật khẩu" iconComponent={<MaterialCommunityIcons size={32} name="key-variant" color="#2f3542"/>}/>
                 </View>
+            </View>
+            <View style={styles.logoutBtn}>
+                <Button  title="Đăng xuất" background={color.shadow}/>
             </View>
         </Screen>
     );
@@ -78,13 +81,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 20,
         elevation: 1,
-        paddingBottom: 40,
+        paddingBottom: 20,
         paddingTop: 80
     },
     backBtn: {
         position: 'absolute',
         top: 10,
-        left: 0
+        left: 10
     },
     icon: {
         position: 'absolute',
@@ -102,8 +105,14 @@ const styles = StyleSheet.create({
     },
     listingItem: {
         width: "100%",
-        padding: 7,
-        paddingLeft: 10
+        padding: 8,
+        paddingLeft: 15
+    },
+    logoutBtn: {
+        position: "absolute",
+        bottom: 100,
+        width: "80%",
+        alignSelf: 'center'
     }
 })
 
