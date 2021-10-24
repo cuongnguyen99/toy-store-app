@@ -7,10 +7,14 @@ import CategoryListScreen from './screens/CategoryListScreen';
 import ListProductScreen from './screens/ListProductScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import { Icon } from './components/common';
+import color from './config/colors';
 
 export default function App() {
   return (
     // <LoginScreen/>
-    <RegisterScreen/>
+    // <RegisterScreen/>
+    <ProfileScreen/>
   );
 }

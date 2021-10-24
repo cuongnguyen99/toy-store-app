@@ -1,13 +1,15 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableHighlight, View, Text} from 'react-native';
+import color from '../../config/colors';
 
-function ListItem(props) {
+function ListItem({title, subtitle, image, iconComponent, style}) {
     return (
         <TouchableHighlight
-            underlayColor= {color.white}
-            onPress={() => console.log()}    
+            underlayColor= "#f1f1f1"
+            onPress={() => console.log()}
+            style={style}   
         >
-            <View style={styles.container}>
+            <View style={[styles.container]}>
                 {iconComponent}
                 {image && <Image style={styles.image} source={image}/>}
                 <View style={styles.content_view}>
@@ -24,7 +26,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 20,
         paddingTop: 0,
-        paddingBottom: 5
+        paddingBottom: 5,
+        paddingLeft: 0,
     },
     image:{
         width: 70,
@@ -32,13 +35,13 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     content_view:{
-        paddingLeft: 10,
+        paddingLeft: 20,
         justifyContent: 'center'        
     }
     ,
     title:{
-        fontSize: 16,
-        fontWeight: "bold"
+        fontSize: 19,
+        color: color.text
     },
     subtitle:{
         fontSize: 15,
