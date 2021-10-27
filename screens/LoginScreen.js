@@ -33,25 +33,27 @@ function LoginScreen({ navigation }) {
     }
     // On Press Sign In Button
     const onSubmit = async (user) => {
-        var check = users.some(item => {
-            if(item.username == user.username)
-            {
-                if(item.password == user.password)
-                {
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        })
+        // var check = users.some(item => {
+        //     if(item.username == user.username)
+        //     {
+        //         if(item.password == user.password)
+        //         {
+        //             return true;
+        //         }
+        //         return false;
+        //     }
+        //     return false;
+        // })
         
-        if(check) {
-            Toast.showWithGravity("Xác thực tài khoản thành công!", Toast.LONG, Toast.TOP);
-            navigation.navigate("Main");
-        }
-        else {
-            Toast.showWithGravity("Tài khoản hoặc mật khẩu chưa chính xác!", Toast.LONG, Toast.TOP);
-        }
+        // if(check) {
+        //     Toast.showWithGravity("Xác thực tài khoản thành công!", Toast.LONG, Toast.TOP);
+        //     navigation.navigate("Main");
+        // }
+        // else {
+        //     Toast.showWithGravity("Tài khoản hoặc mật khẩu chưa chính xác!", Toast.LONG, Toast.TOP);
+        // }
+
+        navigation.navigate("Main");
     }
 
     // When click on register text

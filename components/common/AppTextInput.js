@@ -9,6 +9,7 @@ function AppTextInput({style, content, ...otherProps}) {
             style={[styles.input, style]}
             placeholder={content && content}
             placeholderTextColor={color.sub_text}
+            selectionColor={color.text}
             numberOfLines={1}
             disableFullscreenUI={true}
             {...otherProps}

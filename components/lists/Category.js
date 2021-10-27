@@ -3,14 +3,14 @@ import { ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react
 
 import color from '../../config/colors';
 
-function Category({title,image}) {
+function Category({title, image}) {
     return(
         <TouchableOpacity 
             style={styles.container}
             activeOpacity={0.7}
         >
             <ImageBackground
-            source={image}
+            source= {{uri: image}}
             style = {styles.background}
             >
             <View style= {styles.view}>
