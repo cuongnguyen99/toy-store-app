@@ -24,7 +24,7 @@ function Category({title,image}) {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 15,
+        marginTop: 20,
         marginLeft: 20,
         marginRight: 20
     }

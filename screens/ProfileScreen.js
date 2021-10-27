@@ -39,12 +39,16 @@ const menus = [
     }
 ];
 
-function ProfileScreen() {
+function ProfileScreen({ navigation }) {
+
+    // Handle when touch Logout button
+    const handleLogout = () => {
+        navigation.navigate("Auth");
+        // console.log("Log out");
+    }
+
     return (
         <Screen style={styles.screen}>
-            <TouchableOpacity style={styles.backBtn}>
-                <MaterialIcons name="keyboard-backspace" size={40}/>
-            </TouchableOpacity>
             <View style={styles.container}>
                 <Icon style={styles.icon} name="account" backgroundColor={color.shadow} size={120} iconColor="#ecf0f1"/>
                 <AppText style={styles.name}>Cương Nguyễn</AppText>
@@ -63,7 +67,7 @@ function ProfileScreen() {
                 </View>
             </View>
             <View style={styles.logoutBtn}>
-                <Button  title="Đăng xuất" background={color.shadow}/>
+                <Button  title="Đăng xuất" background={color.shadow} onPress={handleLogout}/>
             </View>
         </Screen>
     );
@@ -83,11 +87,6 @@ const styles = StyleSheet.create({
         elevation: 1,
         paddingBottom: 20,
         paddingTop: 80
-    },
-    backBtn: {
-        position: 'absolute',
-        top: 10,
-        left: 10
     },
     icon: {
         position: 'absolute',

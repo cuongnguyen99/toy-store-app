@@ -138,7 +138,7 @@ function RegisterScreen() {
                             
                         </View>
                         <View style={styles.registerButton}>
-                            <Button title="Register" onPress={handleSubmit}></Button>
+                            <Button title="Đăng ký" onPress={handleSubmit}></Button>
                         </View>
                     </>
                 )}

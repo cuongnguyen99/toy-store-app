@@ -1,8 +1,8 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
 import {Category} from '../components/lists';
-import Screen from './Screen';
+import color from '../config/colors';
 
 const categories = [
     {
@@ -29,7 +29,7 @@ const categories = [
 
 function CategoryListScreen(props) {
     return (
-        <Screen style={styles.container}>
+        <View style={styles.container}>
             <FlatList
                 data={categories}
                 keyExtractor={categorie => categorie.title}
@@ -40,12 +40,13 @@ function CategoryListScreen(props) {
                     />
                 }
             />
-        </Screen>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: color.background
     }
 })
 

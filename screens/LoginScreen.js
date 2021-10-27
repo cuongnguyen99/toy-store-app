@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required('Please enter the password')
 })
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
     const apiUrl = "https://6171698bc20f3a001705fcb1.mockapi.io/api/users";
     const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
@@ -47,6 +47,7 @@ function LoginScreen() {
         
         if(check) {
             Toast.showWithGravity("Xác thực tài khoản thành công!", Toast.LONG, Toast.TOP);
+            navigation.navigate("Main");
         }
         else {
             Toast.showWithGravity("Tài khoản hoặc mật khẩu chưa chính xác!", Toast.LONG, Toast.TOP);
@@ -55,7 +56,7 @@ function LoginScreen() {
 
     // When click on register text
     const onRegisterPress = () => {
-        console.log("Register button");
+        navigation.navigate("Register");
     }
 
     // When click on forget password text
