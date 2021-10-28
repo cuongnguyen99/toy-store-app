@@ -7,8 +7,6 @@ function AppText({children, style, ...otherProps}) {
     return (
         <Text 
             style={[styles.text, style]} 
-            ellipsizeMode="head" 
-            numberOfLines={1}
             {...otherProps}
         >
             {children}

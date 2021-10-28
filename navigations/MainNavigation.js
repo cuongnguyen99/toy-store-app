@@ -2,10 +2,9 @@ import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
-import HomeNavigation from '../navigations/HomeNavigation';
 import AccountNavigation from '../navigations/AccountNavigation';
 import color from '../config/colors';
+import CategoryNavigation from './CategoryNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +16,7 @@ function MainNavigation(props) {
             tabBarHideOnKeyboard: true,
           }}
         >
-          <Tab.Screen name="Home" component={HomeNavigation}
+          <Tab.Screen name="Home" component={CategoryNavigation}
             options={{
               title: "Trang chủ",
               headerTitleAlign: 'center',

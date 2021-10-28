@@ -12,11 +12,11 @@ import ProfileScreen from './screens/ProfileScreen';
 import { Icon } from './components/common';
 import color from './config/colors';
 import AuthNavigation from './navigations/AuthNavigation';
-import HomeNavigation from './navigations/HomeNavigation';
 import AccountNavigation from './navigations/AccountNavigation';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MainNavigation from './navigations/MainNavigation';
 import CategoryListScreen from './screens/CategoryListScreen';
+import FeedNavigation from './navigations/FeedNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +31,7 @@ export default function App() {
           <Stack.Screen name="Auth" component={AuthNavigation}/>
           <Stack.Screen name="Main" component={MainNavigation}/>
           <Stack.Screen name="Profile" component={AccountNavigation}/>
+          <Stack.Screen name="Product" component={FeedNavigation}/>
         </Stack.Navigator>
       </NavigationContainer>
   );

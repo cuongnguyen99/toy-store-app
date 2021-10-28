@@ -17,20 +17,26 @@ function Product({image, title, price, onSale=null}) {
             >
                 <View style={styles.productInner}>
                     <ImageBackground 
-                        source={image} 
+                        source={{uri: image}} 
                         style={styles.productImage} 
                         resizeMode='stretch'
                     >
                     </ImageBackground>
                     <View style={styles.productContent}>
-                        <AppText style={styles.productTitle} lineNumber={2}>{title}</AppText>
+                        <AppText 
+                            style={styles.productTitle} 
+                            numberOfLines={2}
+                            ellipsizeMode="tail"
+                        >
+                                {title}
+                        </AppText>
                         <AppText 
                             style={[
                                 styles.productPrice,
                                 onSale ? {textDecorationLine: 'line-through'} : {textDecorationLine: 'none'}
                             ]}
                         >
-                            {price}$
+                            {price}
                         </AppText>
                     </View>
                 </View>
@@ -58,7 +64,7 @@ const styles = StyleSheet.create({
         flex:1,
         borderRadius: 10,
         overflow: 'hidden',
-        elevation: 1
+        elevation: 4
     },
     productImage: {
         width: "100%",
@@ -76,7 +82,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         textAlign: 'center',
         width:"100%",
-        top: 4
+        top: 4,
+        fontSize: 15
     },
     productPrice: {
         color: color.primary,

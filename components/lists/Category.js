@@ -3,11 +3,12 @@ import { ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react
 
 import color from '../../config/colors';
 
-function Category({title, image}) {
+function Category({title, image, onPress}) {
     return(
         <TouchableOpacity 
             style={styles.container}
             activeOpacity={0.7}
+            onPress={onPress}
         >
             <ImageBackground
             source= {{uri: image}}

@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import {Category} from '../components/lists';
 import color from '../config/colors';
 
-function CategoryListScreen({route}) {
+function CategoryListScreen({route, navigation}) {
     let categoryListing = route.params.item;
 
     return (
@@ -16,6 +16,7 @@ function CategoryListScreen({route}) {
                     <Category
                         title={item.name}
                         image= {item.image}
+                        onPress={() => navigation.navigate("Product", item.product)}
                     />
                 }
             />

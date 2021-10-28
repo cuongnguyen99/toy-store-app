@@ -1,7 +1,8 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
 import {Product } from '../components/lists';
+import color from '../config/colors';
 import Screen from './Screen';
 
 const products = [
@@ -42,26 +43,27 @@ const products = [
     },
 ]
 
-function ListProductScreen()
-{
+function ListProductScreen({route}) {
+    const listings = route.params.item;
+    
     return (
-        <Screen style={styles.listProducts}>
+        <View style={styles.listProducts}>
             {/* <Product image={require("../assets/images/lego2.jpg")} title="Bộ lego tàu chiến" price="500$" onSale={350}></Product>
             <Product image={require("../assets/images/lego2.jpg")} title="Bộ lego hình súng ngắn cầm tay" price="500$"></Product> */}
             <FlatList
                 numColumns={2}
-                data={products}
-                keyExtractor={product => product.id}
+                data={listings}
+                keyExtractor={listing => listing.name}
                 renderItem={({item}) => 
                     <Product
                         image = {item.image}
-                        title = {item.title}
+                        title = {item.name}
                         price = {item.price}
                         onSale = {item.onSale}
                     />
                 }
             />
-        </Screen>
+        </View>
     );
 }
 
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: 'column',
         flexWrap: 'wrap',
+        marginTop: 0
     }
 })
 
