@@ -3,6 +3,8 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 import CategoryListScreen from '../screens/CategoryListScreen';
 import color from '../config/colors';
+import LoadingIndicator from '../components/lists/LoadingIndicator';
+import TopLoadingIndicator from '../components/lists/TopLoadingIndicator';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -28,14 +30,22 @@ function CategoryNavigation() {
         } catch (error) {
             console.log(error)
         } finally {
-            setLoading(false);
+            setTimeout(function() {
+                setLoading(false);
+            }, 2000);
         }
     }
 
     useEffect( () => {
         getDatas();
     }, [])
-    
+    if(isLoading){
+        return <TopLoadingIndicator 
+            style visible={isLoading} 
+            loop={true}
+        />
+    }
+
     return (
         !isLoading && (<Tab.Navigator 
             screenOptions={{
@@ -43,7 +53,7 @@ function CategoryNavigation() {
                 tabBarInactiveTintColor: color.sub_text,
                 tabBarLabelStyle: {
                     fontSize: 16,
-                    fontWeight: "bold",
+                    fontWeight: "bold"
                 },
                 
             }}

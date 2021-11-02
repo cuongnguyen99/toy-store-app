@@ -26,7 +26,7 @@ function CategoryListScreen({route, navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: color.background
+        backgroundColor: color.background,
     }
 })
 

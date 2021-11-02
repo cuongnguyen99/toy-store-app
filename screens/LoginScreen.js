@@ -8,6 +8,7 @@ import {AppTextInput, Button, AppText} from '../components/common';
 import { HairLine } from '../components/lists';
 import Screen from './Screen';
 import color from '../config/colors';
+import LoadingIndicator from '../components/lists/LoadingIndicator';
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().required('Please enter the username'),
@@ -28,7 +29,9 @@ function LoginScreen({ navigation }) {
           } catch (error) {
             console.error(error);
           } finally {
-            setLoading(false);
+            setTimeout(function() {
+                setLoading(false);
+            }, 2000);
           }
     }
     // On Press Sign In Button
@@ -69,6 +72,12 @@ function LoginScreen({ navigation }) {
     useEffect(() => {
         getUsers();
     }, []);
+
+    if(isLoading == true) {
+        return (
+            <LoadingIndicator visible={isLoading}/>
+        );
+    }
 
     return(
         <Screen
