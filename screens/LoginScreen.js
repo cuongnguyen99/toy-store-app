@@ -8,7 +8,7 @@ import {AppTextInput, Button, AppText} from '../components/common';
 import { HairLine } from '../components/lists';
 import Screen from './Screen';
 import color from '../config/colors';
-import LoadingIndicator from '../components/lists/LoadingIndicator';
+import WelcomeLoading from '../components/lists/WelcomeLoading';
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().required('Please enter the username'),
@@ -75,7 +75,7 @@ function LoginScreen({ navigation }) {
 
     if(isLoading == true) {
         return (
-            <LoadingIndicator visible={isLoading}/>
+            <WelcomeLoading visible={isLoading}/>
         );
     }
 
