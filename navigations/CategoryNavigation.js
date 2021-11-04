@@ -40,9 +40,8 @@ function CategoryNavigation() {
         getDatas();
     }, [])
     if(isLoading){
-        return <TopLoadingIndicator 
-            style visible={isLoading} 
-            loop={true}
+        return <LoadingIndicator 
+            style visible={isLoading}
         />
     }
 

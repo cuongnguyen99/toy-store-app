@@ -18,7 +18,7 @@ const registerSchema = Yup.object().shape({
 });
 
 function RegisterScreen() {
-    const apiUrl = "https://6171698bc20f3a001705fcb1.mockapi.io/api/";
+    const apiUrl = "https://pbl6-toystores.herokuapp.com/user/register";
     const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [account, setAccount] = useState({});
@@ -42,7 +42,7 @@ function RegisterScreen() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        await fetch(apiUrl + "registers", requestOption);
+        await fetch(apiUrl, requestOption);
     }
 
     // On Press Sign In Button
@@ -110,13 +110,13 @@ function RegisterScreen() {
                             />
                             <AppText style={styles.warning}>{touched.passwordConfirm && errors.passwordConfirm ? errors.passwordConfirm : null}</AppText>
 
-                            <AppTextInput 
+                            {/* <AppTextInput 
                                 content="Full Name" 
                                 style={styles.textInput}
                                 onChangeText={handleChange("fullname")}
                                 onBlur={() => setFieldTouched("fullname")}
                             />
-                            <AppText style={styles.warning}>{touched.fullname && errors.fullname ? errors.fullname : null}</AppText>
+                            <AppText style={styles.warning}>{touched.fullname && errors.fullname ? errors.fullname : null}</AppText> */}
 
                             <AppTextInput 
                                 content="Email" 
@@ -127,14 +127,14 @@ function RegisterScreen() {
                             />
                             <AppText style={styles.warning}>{touched.email && errors.email ? errors.email : null}</AppText>
 
-                            <AppTextInput 
+                            {/* <AppTextInput 
                                 content="Phone Number" 
                                 style={styles.textInput} 
                                 keyboardType="number-pad"
                                 onChangeText={handleChange("phonenumber")}
                                 onBlur={() => setFieldTouched("phonenumber")}
                             />
-                            <AppText style={styles.warning}>{touched.phonenumber && errors.phonenumber ? errors.phonenumber : null}</AppText>
+                            <AppText style={styles.warning}>{touched.phonenumber && errors.phonenumber ? errors.phonenumber : null}</AppText> */}
                             
                         </View>
                         <View style={styles.registerButton}>

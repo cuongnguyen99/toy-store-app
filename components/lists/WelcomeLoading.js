@@ -1,4 +1,5 @@
 import React from 'react';
+import LottieView from 'lottie-react-native';
 
 function WelcomeLoading({visible = false}) {
     if (!visible) return null;
@@ -6,8 +7,8 @@ function WelcomeLoading({visible = false}) {
     return (
         <LottieView
             autoPlay
-            loop
-            source={require("../../assets/animations/lf30_editor_xkewjcrv.json")}
+            loop = {false}
+            source={require("../../assets/animations/lf30_editor_7o8iekre.json")}
         />
     );
 }
