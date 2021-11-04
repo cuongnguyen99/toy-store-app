@@ -10,6 +10,9 @@ import Screen from './Screen';
 import color from '../config/colors';
 import WelcomeLoading from '../components/lists/WelcomeLoading';
 
+import userApi from '../api/users';
+import ErrorMessage from '../components/common/ErrorMessage';
+
 const validationSchema = Yup.object().shape({
     username: Yup.string().required('Please enter the username'),
     password: Yup.string().required('Please enter the password')
@@ -19,44 +22,47 @@ function LoginScreen({ navigation }) {
     const apiUrl = "https://6171698bc20f3a001705fcb1.mockapi.io/api/users";
     const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
+    const [error, setError] = useState(false);
+    const [errMess, setErrMess] = useState("");
 
-    const getUsers = async () => {
-        try {
-            const res = await fetch(apiUrl);
-            const datas = await res.json();
+    const loadingUsers = async () => {
+        setLoading(true);
+        const res = await userApi.getUsers();
+        
+        setTimeout(function() {
+            setLoading(false);
+        }, 2000);
+        
+        if(!res.ok) return setError(true);
+        setError(false);
+        setUsers(res.data);
 
-            setUsers(datas);
-          } catch (error) {
-            console.error(error);
-          } finally {
-            setTimeout(function() {
-                setLoading(false);
-            }, 2000);
-          }
     }
     // On Press Sign In Button
     const onSubmit = async (user) => {
-        // var check = users.some(item => {
-        //     if(item.username == user.username)
-        //     {
-        //         if(item.password == user.password)
-        //         {
-        //             return true;
-        //         }
-        //         return false;
-        //     }
-        //     return false;
-        // })
+        var check = users.some(item => {
+            if(item.username == user.username)
+            {
+                if(item.password == user.password)
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        })
         
-        // if(check) {
-        //     Toast.showWithGravity("Xác thực tài khoản thành công!", Toast.LONG, Toast.TOP);
-        //     navigation.navigate("Main");
-        // }
-        // else {
-        //     Toast.showWithGravity("Tài khoản hoặc mật khẩu chưa chính xác!", Toast.LONG, Toast.TOP);
-        // }
+        if(check) {
+            // Toast.showWithGravity("Xác thực tài khoản thành công!", Toast.LONG, Toast.TOP);
+            navigation.navigate("Main");
+        }
+        else {
+            // Toast.showWithGravity("Tài khoản hoặc mật khẩu chưa chính xác!", Toast.LONG, Toast.TOP);
+            setError(true);
+            setErrMess("Sai tài khoản hoặc mật khẩu");
+        }
 
-        navigation.navigate("Main");
+        // navigation.navigate("Main");
     }
 
     // When click on register text
@@ -70,7 +76,7 @@ function LoginScreen({ navigation }) {
     }
 
     useEffect(() => {
-        getUsers();
+        loadingUsers();
     }, []);
 
     if(isLoading == true) {
@@ -109,6 +115,8 @@ function LoginScreen({ navigation }) {
                                 onBlur={() => setFieldTouched("password")}
                             />
                             <AppText style={styles.warning}>{touched.password && errors.password ? errors.password : null}</AppText>
+
+                            {error && <ErrorMessage>{errMess}</ErrorMessage>}
 
                             <View style={styles.passAndRegister}>
                                 <TouchableOpacity activeOpacity={0.5} onPress={onRegisterPress}>

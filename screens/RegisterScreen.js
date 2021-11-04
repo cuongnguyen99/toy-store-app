@@ -18,7 +18,7 @@ const registerSchema = Yup.object().shape({
 });
 
 function RegisterScreen() {
-    const apiUrl = "https://pbl6-toystores.herokuapp.com/user/register";
+    // const apiUrl = "https://pbl6-toystores.herokuapp.com/user/register";
     const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [account, setAccount] = useState({});
@@ -59,9 +59,9 @@ function RegisterScreen() {
         }
     }
 
-    useEffect(() => {
-        getUser();
-    }, []);
+    // useEffect(() => {
+    //     getUser();
+    // }, []);
 
     return (
         <Screen style={styles.register}>
