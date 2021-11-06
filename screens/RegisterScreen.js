@@ -5,16 +5,19 @@ import * as Yup from 'yup';
 import Toast from 'react-native-simple-toast';
 
 import {Button, AppTextInput, AppText} from '../components/common'
+import ErrorMessage from '../components/common/ErrorMessage';
 import Screen from './Screen';
 import color from '../config/colors';
+
+import userApi from '../api/users';
 
 const registerSchema = Yup.object().shape({
     username: Yup.string().required("Vui lòng nhập tài khoản!").min(4, "Vui lòng nhập tài khoản có độ dài >4 ký tự!").label("Username"),
     password: Yup.string().required("Vui lòng điền mật khẩu!").min(6, "Mật khẩu phải >6 ký tự!").max(16, "Mật khẩu không được vượt quá 16 ký tự!"),
     passwordConfirm: Yup.string().oneOf([Yup.ref("password")], "Mật khẩu không khớp!").required("Vui lòng xác nhận lại mật khẩu"),
-    fullname: Yup.string().required("Vui lòng điền họ tên người dùng!"),
+    // fullname: Yup.string().required("Vui lòng điền họ tên người dùng!"),
     email: Yup.string().email("Vui lòng nhập đúng định dạng email!").required("Vui lòng nhập email!"),
-    phonenumber: Yup.string().required("Vui lòng nhập số điện thoại!"),
+    // phonenumber: Yup.string().required("Vui lòng nhập số điện thoại!"),
 });
 
 function RegisterScreen() {
@@ -22,46 +25,40 @@ function RegisterScreen() {
     const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [account, setAccount] = useState({});
+    const [err, setErr] = useState(false);
+    const [errMess, setErrMess] = useState("");
 
-    const getUser = async () => {
-        try {
-            const res = await fetch(apiUrl + "registers");
-            const datas = await res.json();
+    const loadingUsers = async () => {
+        setLoading(true);
+        const res = await userApi.getUsers();
 
-            setUsers(datas);
-          } catch (error) {
-            console.error(error);
-          } finally {
-            setLoading(false);
-          }
+        if(!res.ok) return setErr(true);
+
+        setErr(false);
+        setUsers(res.data);
     }
 
-    const postUser = async (user) => {
-        const requestOption = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
-        };
-        await fetch(apiUrl, requestOption);
-    }
+    useEffect(() => {
+        loadingUsers();
+    }, []);
 
     // On Press Sign In Button
-    const onSubmit = async (user) => {
+    const handleSubmit= async (user) => {
         var check = users.every(item => {
             return item.username != user.username; 
         })
         if(check) {
-            await postUser(user);
-            Toast.showWithGravity("Đăng ký tài khoản thành công!", Toast.LONG, Toast.BOTTOM);
+            const result = await userApi.addUser(user);
+            if(!result.ok) 
+                return Toast.showWithGravity("Đã xảy ra lỗi! Vui lòng thử lại!", Toast.LONG, Toast.CENTER);
+            setErr(false);
+            Toast.showWithGravity("Thành Công!",Toast.LONG, Toast.CENTER);
         }
         else {
-            Toast.showWithGravity("Tài khoản đã tồn tại!", Toast.LONG, Toast.BOTTOM);
+            setErr(true);
+            setErrMess("Tài khoản đã tồn tại!");
         }
     }
-
-    // useEffect(() => {
-    //     getUser();
-    // }, []);
 
     return (
         <Screen style={styles.register}>
@@ -74,12 +71,12 @@ function RegisterScreen() {
                     username: "",
                     password: "",
                     passwordConfirm: "",
-                    fullname: "",
+                    // fullname: "",
                     email: "",
-                    phonenumber: ""
+                    // phonenumber: ""
                 }}
                 validationSchema = {registerSchema}
-                onSubmit={values => onSubmit(values)}
+                onSubmit={handleSubmit}
             >
                 { ({handleChange, handleSubmit, setFieldTouched, touched, errors}) => (
                     <>
@@ -90,7 +87,10 @@ function RegisterScreen() {
                                 onChangeText={handleChange("username")}
                                 onBlur={() => setFieldTouched("username")}
                             />
-                            <AppText style={styles.warning}>{touched.username && errors.username ? errors.username : null}</AppText>
+                            <AppText style={styles.warning}>
+                                {touched.username && errors.username ? errors.username : null}
+                                {touched.username && err ? errMess : null}
+                            </AppText>
    
                             <AppTextInput 
                                 content="Password" 

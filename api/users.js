@@ -4,4 +4,19 @@ const endpoint = "users";
 
 const getUsers = () => api.get(endpoint);
 
-export default {getUsers,};
+const addUser = (user) => {
+    const data = {
+        username: user.username,
+        password: user.password,
+        email: user.email
+    }
+
+    // const data = new FormData();
+    // data.append('username', user.username);
+    // data.append('password', user.password);
+    // data.append('email', user.email);
+
+    return api.post(endpoint, data);
+}
+
+export default {getUsers, addUser};

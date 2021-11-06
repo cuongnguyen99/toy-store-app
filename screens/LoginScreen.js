@@ -9,9 +9,9 @@ import { HairLine } from '../components/lists';
 import Screen from './Screen';
 import color from '../config/colors';
 import WelcomeLoading from '../components/lists/WelcomeLoading';
+import ErrorMessage from '../components/common/ErrorMessage';
 
 import userApi from '../api/users';
-import ErrorMessage from '../components/common/ErrorMessage';
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().required('Please enter the username'),
