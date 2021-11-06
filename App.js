@@ -9,7 +9,7 @@ import WelcomeScreen from './screens/WelcomeCreen';
 import Screen from './screens/Screen';
 import ListProductScreen from './screens/ListProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import { Icon } from './components/common';
+import { AppText, Icon } from './components/common';
 import color from './config/colors';
 import AuthNavigation from './navigations/AuthNavigation';
 import AccountNavigation from './navigations/AccountNavigation';
@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
       <NavigationContainer>
-        <Stack.Navigator 
+        <Stack.Navigator
           screenOptions={{
             headerShown: false
           }}
@@ -35,4 +35,5 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
   );
+
 }

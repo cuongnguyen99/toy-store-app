@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         color: color.text,
         fontSize: 16,
-        paddingRight: 15
+        paddingRight: 15,
+        overflow: 'hidden'
     }
 })
 

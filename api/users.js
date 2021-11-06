@@ -4,7 +4,7 @@ const endpoint = "users";
 
 const getUsers = () => api.get(endpoint);
 
-const addUser = (user) => {
+const addUser = (user, onUploadProgress) => {
     const data = {
         username: user.username,
         password: user.password,
@@ -16,7 +16,9 @@ const addUser = (user) => {
     // data.append('password', user.password);
     // data.append('email', user.email);
 
-    return api.post(endpoint, data);
+    return api.post(endpoint, data, {
+        onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total),
+    });
 }
 
 export default {getUsers, addUser};

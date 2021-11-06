@@ -10,6 +10,7 @@ import Screen from './Screen';
 import color from '../config/colors';
 
 import userApi from '../api/users';
+import UploadScreen from './UploadScreen';
 
 const registerSchema = Yup.object().shape({
     username: Yup.string().required("Vui lòng nhập tài khoản!").min(4, "Vui lòng nhập tài khoản có độ dài >4 ký tự!").label("Username"),
@@ -27,6 +28,8 @@ function RegisterScreen() {
     const [account, setAccount] = useState({});
     const [err, setErr] = useState(false);
     const [errMess, setErrMess] = useState("");
+    const [uploadVisible, setUploadVisible] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const loadingUsers = async () => {
         setLoading(true);
@@ -43,16 +46,21 @@ function RegisterScreen() {
     }, []);
 
     // On Press Sign In Button
-    const handleSubmit= async (user) => {
+    const handleSubmit= async (user, {resetForm}) => {
         var check = users.every(item => {
             return item.username != user.username; 
         })
         if(check) {
-            const result = await userApi.addUser(user);
-            if(!result.ok) 
+            setProgress(0);
+            setUploadVisible(true);
+            const result = await userApi.addUser(user, progress => setProgress(progress));
+
+            if(!result.ok) {
+                setUploadVisible(false);
                 return Toast.showWithGravity("Đã xảy ra lỗi! Vui lòng thử lại!", Toast.LONG, Toast.CENTER);
+            }
+            resetForm({});
             setErr(false);
-            Toast.showWithGravity("Thành Công!",Toast.LONG, Toast.CENTER);
         }
         else {
             setErr(true);
@@ -62,6 +70,13 @@ function RegisterScreen() {
 
     return (
         <Screen style={styles.register}>
+            <UploadScreen 
+                onDone={() => {
+                    setUploadVisible(false);
+                }} 
+                progress={progress} 
+                visible={uploadVisible}
+            />
             <Image
                 style={styles.img}
                 source={require("../assets/images/logo.png")}
@@ -78,13 +93,14 @@ function RegisterScreen() {
                 validationSchema = {registerSchema}
                 onSubmit={handleSubmit}
             >
-                { ({handleChange, handleSubmit, setFieldTouched, touched, errors}) => (
+                { ({handleChange, handleSubmit, setFieldTouched, setFieldValue, touched, errors, values}) => (
                     <>
                         <View style={styles.registerForm}>
                             <AppTextInput 
                                 content="Username" 
                                 style={styles.textInput}
-                                onChangeText={handleChange("username")}
+                                onChangeText={text => setFieldValue("username", text)}
+                                value={values["username"]}
                                 onBlur={() => setFieldTouched("username")}
                             />
                             <AppText style={styles.warning}>
@@ -96,7 +112,8 @@ function RegisterScreen() {
                                 content="Password" 
                                 style={styles.textInput} 
                                 secureTextEntry={true}
-                                onChangeText={handleChange("password")}
+                                onChangeText={text => setFieldValue("password", text)}
+                                value = {values["password"]}
                                 onBlur={() => setFieldTouched("password")}
                             />
                             <AppText style={styles.warning}>{touched.password && errors.password ? errors.password : null}</AppText>
@@ -105,7 +122,8 @@ function RegisterScreen() {
                                 content="Confirm Password" 
                                 style={styles.textInput} 
                                 secureTextEntry={true}
-                                onChangeText={handleChange("passwordConfirm")}
+                                onChangeText={text => setFieldValue("passwordConfirm", text)}
+                                value = {values["passwordConfirm"]}
                                 onBlur={() => setFieldTouched("passwordConfirm")}
                             />
                             <AppText style={styles.warning}>{touched.passwordConfirm && errors.passwordConfirm ? errors.passwordConfirm : null}</AppText>
@@ -122,7 +140,8 @@ function RegisterScreen() {
                                 content="Email" 
                                 style={styles.textInput}
                                 keyboardType="email-address"
-                                onChangeText={handleChange("email")}
+                                onChangeText={text => setFieldValue("email", text)}
+                                value = {values["email"]}
                                 onBlur={() => setFieldTouched("email")}
                             />
                             <AppText style={styles.warning}>{touched.email && errors.email ? errors.email : null}</AppText>
