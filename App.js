@@ -7,7 +7,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Screen from './screens/Screen';
 import ListProductScreen from './screens/ListProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import { AppText, Icon } from './components/common';
 import color from './config/colors';
 import AuthNavigation from './navigations/AuthNavigation';
 import AccountNavigation from './navigations/AccountNavigation';
@@ -15,11 +14,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MainNavigation from './navigations/MainNavigation';
 import CategoryListScreen from './screens/CategoryListScreen';
 import FeedNavigation from './navigations/FeedNavigation';
+import OfflineNotice from './components/common/OfflineNotice';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <>
+      <OfflineNotice/>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -32,6 +34,7 @@ export default function App() {
           <Stack.Screen name="Product" component={FeedNavigation}/>
         </Stack.Navigator>
       </NavigationContainer>
+    </>
   );
 
 }
