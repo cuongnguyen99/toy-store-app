@@ -4,8 +4,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import WelcomeScreen from './screens/WelcomeCreen';
 import Screen from './screens/Screen';
 import ListProductScreen from './screens/ListProductScreen';
 import ProfileScreen from './screens/ProfileScreen';

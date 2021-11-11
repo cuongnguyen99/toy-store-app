@@ -19,7 +19,6 @@ const validationSchema = Yup.object().shape({
 })
 
 function LoginScreen({ navigation }) {
-    const apiUrl = "https://6171698bc20f3a001705fcb1.mockapi.io/api/users";
     const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(false);
