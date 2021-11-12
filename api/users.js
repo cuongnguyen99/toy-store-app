@@ -2,7 +2,7 @@ import api from "./client";
 
 const endpoint = "users";
 
-const getUsers = () => api.get(endpoint);
+const login = (username, password) => api.post(endpoint, {username, password});
 
 const addUser = (user, onUploadProgress) => {
     const data = {
@@ -21,4 +21,4 @@ const addUser = (user, onUploadProgress) => {
     });
 }
 
-export default {getUsers, addUser};
+export default {login, addUser};

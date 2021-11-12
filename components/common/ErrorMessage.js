@@ -3,7 +3,8 @@ import { Text, StyleSheet } from 'react-native';
 
 import st from '../../config/styles'
 
-function ErrorMessage({children, ...otherProps}) {
+function ErrorMessage({children, visible=false, ...otherProps}) {
+    if(!visible) return null;
     return (
         <Text 
             style={[st.text, styles.err]} 

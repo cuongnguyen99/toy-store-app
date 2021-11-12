@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Image,ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import jwtDecode from 'jwt-decode';
+
 import Toast from 'react-native-simple-toast';
 
 import {AppTextInput, Button, AppText} from '../components/common';
@@ -12,6 +14,7 @@ import WelcomeLoading from '../components/lists/WelcomeLoading';
 import ErrorMessage from '../components/common/ErrorMessage';
 
 import userApi from '../api/users';
+import AuthContext from '../auth/context';
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().required('Please enter the username'),
@@ -19,64 +22,33 @@ const validationSchema = Yup.object().shape({
 })
 
 function LoginScreen({ navigation }) {
+    const authContext = useContext(AuthContext);
     const [isLoading, setLoading] = useState(true);
-    const [users, setUsers] = useState([]);
-    const [error, setError] = useState(false);
+    const [loginFail, setloginFail] = useState(false);
     const [errMess, setErrMess] = useState("");
 
-    const loadingUsers = async () => {
-        setLoading(true);
-        const res = await userApi.getUsers();
-        
-        setTimeout(function() {
-            setLoading(false);
-        }, 2000);
-        
-        if(!res.ok) return setError(true);
-        setError(false);
-        setUsers(res.data);
-
-    }
     // On Press Sign In Button
-    const onSubmit = async (user) => {
-        var check = users.some(item => {
-            if(item.username == user.username)
-            {
-                if(item.password == user.password)
-                {
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        })
-        
-        if(check) {
-            // Toast.showWithGravity("Xác thực tài khoản thành công!", Toast.LONG, Toast.TOP);
-            navigation.navigate("Main");
-        }
-        else {
-            // Toast.showWithGravity("Tài khoản hoặc mật khẩu chưa chính xác!", Toast.LONG, Toast.TOP);
-            setError(true);
-            setErrMess("Sai tài khoản hoặc mật khẩu");
+    const handleLogin = async ({username, password}) => {
+        const result = await userApi.login(username, password);
+        if(!result.ok) {
+            return setloginFail(true);
         }
 
-        // navigation.navigate("Main");
+        setloginFail(false);
+        const user = jwtDecode(result.data);
+        console.log(user);
+        // authContext.setUser(user);
     }
 
     // When click on register text
-    const onRegisterPress = () => {
-        navigation.navigate("Register");
+    const onRegisterPress = () => {       
+        console.log("Forget password button");
     }
 
     // When click on forget password text
     const onForgetPasswordPress = () => {
         console.log("Forget password button");
     }
-
-    useEffect(() => {
-        loadingUsers();
-    }, []);
 
     if(isLoading == true) {
         return (
@@ -95,7 +67,7 @@ function LoginScreen({ navigation }) {
             <Formik
                 initialValues={{username: "", password: ""}}
                 validationSchema = {validationSchema}
-                onSubmit={values => onSubmit(values)}
+                onSubmit={handleLogin}
             >
                 { ({handleChange, handleSubmit, setFieldTouched, touched,errors}) => (
                     <>
@@ -115,7 +87,7 @@ function LoginScreen({ navigation }) {
                             />
                             <AppText style={styles.warning}>{touched.password && errors.password ? errors.password : null}</AppText>
 
-                            {error && <ErrorMessage>{errMess}</ErrorMessage>}
+                            <ErrorMessage visible={loginFail}>{errMess}</ErrorMessage>
 
                             <View style={styles.passAndRegister}>
                                 <TouchableOpacity activeOpacity={0.5} onPress={onRegisterPress}>
