@@ -6,7 +6,7 @@ const prefix = 'cache';
 const isExpired = (item) => {
     const now = moment(Date.now());
     const storedTime = moment(item.timestamp);
-    return now.diff(storedTime, 'minutes') > 5;
+    return now.diff(storedTime, 'days') > 3;
 };
 const store = async (key, value) => {
     try {

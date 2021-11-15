@@ -1,8 +1,16 @@
 import api from "./client";
 
-const endpoint = "users";
+const signin = "user/login";
+const userInfor = "user/infor";
+// const endpoint = "users";
 
-const login = (username, password) => api.post(endpoint, {username, password});
+const login = (email, password) => api.post(signin, {email, password});
+
+const getUserInfor = (accessToken) => {
+    return api.get(userInfor,"",{
+        headers: {Authorization: accessToken}
+    })
+} 
 
 const addUser = (user, onUploadProgress) => {
     const data = {
@@ -11,14 +19,9 @@ const addUser = (user, onUploadProgress) => {
         email: user.email
     }
 
-    // const data = new FormData();
-    // data.append('username', user.username);
-    // data.append('password', user.password);
-    // data.append('email', user.email);
-
     return api.post(endpoint, data, {
         onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total),
     });
 }
 
-export default {login, addUser};
+export default {login, addUser, getUserInfor};

@@ -2,9 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Image,ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import jwtDecode from 'jwt-decode';
-
-import Toast from 'react-native-simple-toast';
 
 import {AppTextInput, Button, AppText} from '../components/common';
 import { HairLine } from '../components/lists';
@@ -17,27 +14,36 @@ import userApi from '../api/users';
 import AuthContext from '../auth/context';
 
 const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Please enter the username'),
+    email: Yup.string().required('Please enter the username'),
     password: Yup.string().required('Please enter the password')
 })
 
 function LoginScreen({ navigation }) {
     const authContext = useContext(AuthContext);
-    const [isLoading, setLoading] = useState(true);
     const [loginFail, setloginFail] = useState(false);
-    const [errMess, setErrMess] = useState("");
+    const [errMessage, setErrMessage] = useState("");
+    // const [isLoading, setLoading] = useState(true);
 
-    // On Press Sign In Button
-    const handleLogin = async ({username, password}) => {
-        const result = await userApi.login(username, password);
+    // On Press SignIn Button
+    const handleLogin = async ({email, password}) => {
+        const result = await userApi.login(email, password);
         if(!result.ok) {
+            setErrMessage("Tài khoản hoặc mật khẩu không chính xác!!!");
             return setloginFail(true);
         }
 
         setloginFail(false);
-        const user = jwtDecode(result.data);
-        console.log(user);
-        // authContext.setUser(user);
+        const accessToken = result.data.accesstoken;
+        console.log(accessToken);
+
+        const res = await userApi.getUserInfor(accessToken);
+        if(!res.ok) {
+            setErrMessage("Lỗi kết nối tới máy chủ. Vui lòng thử lại sau!");
+            return setloginFail(true);
+        }
+        setloginFail(false);
+        const user = res.data;
+        console.log(user.name);
     }
 
     // When click on register text
@@ -50,11 +56,11 @@ function LoginScreen({ navigation }) {
         console.log("Forget password button");
     }
 
-    if(isLoading == true) {
-        return (
-            <WelcomeLoading visible={isLoading}/>
-        );
-    }
+    // if(isLoading == true) {
+    //     return (
+    //         <WelcomeLoading visible={isLoading}/>
+    //     );
+    // }
 
     return(
         <Screen
@@ -65,7 +71,7 @@ function LoginScreen({ navigation }) {
                 source={require("../assets/images/logo.png")}
             />
             <Formik
-                initialValues={{username: "", password: ""}}
+                initialValues={{email: "", password: ""}}
                 validationSchema = {validationSchema}
                 onSubmit={handleLogin}
             >
@@ -74,10 +80,10 @@ function LoginScreen({ navigation }) {
                         <View style={styles.input}>
                             <AppTextInput 
                                 content="Username" 
-                                onChangeText={handleChange("username")}
-                                onBlur={() => setFieldTouched("username")}
+                                onChangeText={handleChange("email")}
+                                onBlur={() => setFieldTouched("email")}
                             />
-                            <AppText style={styles.warning}>{touched.username && errors.username ? errors.username : null}</AppText>
+                            <AppText style={styles.warning}>{touched.email && errors.email ? errors.email : null}</AppText>
 
                             <AppTextInput 
                                 content="Password" 
@@ -87,7 +93,7 @@ function LoginScreen({ navigation }) {
                             />
                             <AppText style={styles.warning}>{touched.password && errors.password ? errors.password : null}</AppText>
 
-                            <ErrorMessage visible={loginFail}>{errMess}</ErrorMessage>
+                            <ErrorMessage visible={loginFail}>{"Tài khoản hoặc mật khẩu không chính xác!"}</ErrorMessage>
 
                             <View style={styles.passAndRegister}>
                                 <TouchableOpacity activeOpacity={0.5} onPress={onRegisterPress}>
