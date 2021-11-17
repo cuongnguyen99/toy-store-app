@@ -8,6 +8,7 @@ const color = {
     shadow: "#767676",
     icon_background: "#D8D8D8",
     sale: "#d90008",
+    price: "#ff0000",
     white: "#ffffff",
     black: "#000000",
     google: "#4281e5"

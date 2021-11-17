@@ -4,9 +4,9 @@ import color from '../../config/colors';
 
 // import colors from '';
 
-function ListItemSeparator() {
+function ListItemSeparator({style}) {
     return (
-        <View style={styles.separator}/>
+        <View style={[styles.separator, style]}/>
     );
 }
 

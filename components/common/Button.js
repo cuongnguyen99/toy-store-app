@@ -4,13 +4,14 @@ import { StyleSheet, Text,TouchableOpacity } from 'react-native';
 
 import color from '../../config/colors';
 
-function Button({title, background, icon, onPress}){
+function Button({title, background, icon, onPress, style}){
     return(
         <TouchableOpacity onPress={onPress}
             activeOpacity = {0.7}
             style = {[
                 styles.button, 
-                background ? {backgroundColor: background} : {backgroundColor: color.primary} 
+                background ? {backgroundColor: background} : {backgroundColor: color.primary},
+                style 
             ]}>
             {/* {icon && <MaterialCommunityIcons icon={icon} size={40} color={color.white}/>} */}
             <MaterialCommunityIcons style={styles.icon} name={icon} size={40} color={color.white}/>

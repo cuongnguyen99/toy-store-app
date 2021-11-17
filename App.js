@@ -16,6 +16,10 @@ import CategoryListScreen from './screens/CategoryListScreen';
 import FeedNavigation from './navigations/FeedNavigation';
 import OfflineNotice from './components/common/OfflineNotice';
 import AuthContext from './auth/context';
+import DetailProductScreen from './screens/DetailProductScreen';
+import CartItem from './components/cart/CartItem';
+import CartScreen from './screens/CartScreen';
+import ListItemDelete from './components/lists/ListItemDelete';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,21 +27,23 @@ export default function App() {
   const [user, setUser] = useState();
 
   return (
-    <AuthContext.Provider value={{user, setUser}}>
-      <OfflineNotice/>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          <Stack.Screen name="Auth" component={AuthNavigation}/>
-          <Stack.Screen name="Main" component={MainNavigation}/>
-          <Stack.Screen name="Profile" component={AccountNavigation}/>
-          <Stack.Screen name="Product" component={FeedNavigation}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <CartScreen/>
+
+    // <AuthContext.Provider value={{user, setUser}}>
+    //   <OfflineNotice/>
+    //   <NavigationContainer>
+    //     <Stack.Navigator
+    //       screenOptions={{
+    //         headerShown: false
+    //       }}
+    //     >
+    //       <Stack.Screen name="Auth" component={AuthNavigation}/>
+    //       <Stack.Screen name="Main" component={MainNavigation}/>
+    //       <Stack.Screen name="Profile" component={AccountNavigation}/>
+    //       <Stack.Screen name="Product" component={FeedNavigation}/>
+    //     </Stack.Navigator>
+    //   </NavigationContainer>
+    // </AuthContext.Provider>
   );
 
 }
