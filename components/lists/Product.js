@@ -7,13 +7,13 @@ import color from '../../config/colors';
 const heightProduct = 320;
 const heightImg = (320/100)*70;
 
-function Product({image, title, price, onSale=null}) {
+function Product({image, title, price, onSale=null, onPress}) {
     return (
         <View style={styles.product}>
             <TouchableHighlight 
                 style={styles.productBox} 
                 activeOpacity={0.78}  
-                onPress={() => console.log(onSale)}
+                onPress={onPress}
             >
                 <View style={styles.productInner}>
                     <ImageBackground 
@@ -36,7 +36,7 @@ function Product({image, title, price, onSale=null}) {
                                 onSale ? {textDecorationLine: 'line-through'} : {textDecorationLine: 'none'}
                             ]}
                         >
-                            {price}
+                            {price}đ
                         </AppText>
                     </View>
                 </View>

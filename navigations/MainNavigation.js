@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AccountNavigation from '../navigations/AccountNavigation';
 import color from '../config/colors';
 import CategoryNavigation from './CategoryNavigation';
+import CartScreen from '../screens/CartScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,6 +22,17 @@ function MainNavigation(props) {
               title: "Trang chủ",
               headerTitleAlign: 'center',
               tabBarIcon: ({focused}) => (<MaterialCommunityIcons color={color} name="home" size={30}
+                style={{
+                  color: focused ? color.primary : color.sub_text
+                }}
+              />),
+            }}
+          />
+          <Tab.Screen name="Cart" component={CartScreen} 
+            options={{
+              title: "Giỏ hàng",
+              headerTitleAlign: 'center',
+              tabBarIcon: ({focused}) => (<MaterialCommunityIcons color={color} name="cart-outline" size={30}
                 style={{
                   color: focused ? color.primary : color.sub_text
                 }}

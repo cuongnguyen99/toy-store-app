@@ -5,9 +5,13 @@ import {Product } from '../components/lists';
 import color from '../config/colors';
 import Screen from './Screen';
 
-function ListProductScreen({route}) {
+function ListProductScreen({route, navigation}) {
     const {isLoading, setLoading} = useState(true);
     const listings = route.params.item;
+
+    const handleProductPress = (item) => {
+        navigation.navigate("DetailProduct", item);
+    }
 
     return (
         <View style={styles.listProducts}>
@@ -21,6 +25,7 @@ function ListProductScreen({route}) {
                         title = {item.name}
                         price = {item.price}
                         onSale = {item.onSale}
+                        onPress = {() => handleProductPress(item)}
                     />
                 }
             />

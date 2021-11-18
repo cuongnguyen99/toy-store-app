@@ -5,7 +5,7 @@ import {Category} from '../components/lists';
 import color from '../config/colors';
 
 function CategoryListScreen({route, navigation}) {
-    let categoryListing = route.params.item;
+    const categoryListing = route.params.item;
 
     return (
         <View style={styles.container}>

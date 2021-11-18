@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View} from 'react-native';
 import CartItem from '../components/cart/CartItem';
 import { AppText, Button } from '../components/common';
@@ -7,86 +7,56 @@ import ListItemSeparator from '../components/lists/ListItemSeparator';
 import color from '../config/colors';
 
 import Screen from './Screen';
-
-const initProducts = [
-    {
-        id: 1,
-        title: "Đồ chơi 4 xe công trình NÔNG NGHIỆP lắp ráp ốc vít chạy trớn XY01-1",
-        price: 1200000,
-        image: "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg",
-        quantity: 1
-    },
-    {
-        id: 2,
-        title: "Đồ chơi 4 xe công trình NÔNG NGHIỆP lắp ráp ốc vít chạy trớn XY01-1",
-        price: 1200000,
-        image: "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg",
-        quantity: 1
-    },
-    {
-        id: 3,
-        title: "Đồ chơi 4 xe công trình NÔNG NGHIỆP lắp ráp ốc vít chạy trớn XY01-1",
-        price: 1200000,
-        image: "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg",
-        quantity: 1
-    },
-    {
-        id: 4,
-        title: "Đồ chơi 4 xe công trình NÔNG NGHIỆP lắp ráp ốc vít chạy trớn XY01-1",
-        price: 1200000,
-        image: "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg",
-        quantity: 1
-    }
-];
+import CartContext from '../auth/CartContext';
 
 function CartScreen(props) {
-    const [products, setProducts] = useState(initProducts);
+    const {cart, setCart} = useContext(CartContext);
     const [total, setTotal] = useState(0);
 
     const totalPrice = () => {
-        const total = products.reduce((total, item) => {
+        const total = cart.reduce((total, item) => {
             return total += (item.price * item.quantity);
         }, 0);
         setTotal(total);
     }
     
     const handleDelete = (product) => {
-        const newProducts = products.filter( (m) => m.id != product.id);
-        setProducts(newProducts);
+        const newProducts = cart.filter( (m) => m.name != product.name);
+        setCart(newProducts);
     }
 
     const handleAddPress = (product) => {
-        const newProducts = [...products];
+        const newProducts = [...cart];
         const index = newProducts.indexOf(product);
 
         newProducts[index] = {...product};
         newProducts[index].quantity++;
-        setProducts(newProducts);
+        setCart(newProducts);
     }
 
     const handleSubtractPress = (product) => {
-        const newProducts = [...products];
+        const newProducts = [...cart];
         const index = newProducts.indexOf(product);
 
         newProducts[index] = {...product};
         if(newProducts[index].quantity > 1 ){
             newProducts[index].quantity--;
         }
-        setProducts(newProducts);
+        setCart(newProducts);
     }
 
     useEffect( () => {
         totalPrice(); 
-     }, [products] )
+     }, [cart] )
 
     return (
         <Screen style={styles.container}>
             <FlatList
-                data={products}
-                keyExtractor={(product) => product.id}
+                data={cart}
+                keyExtractor={(cartitem) => cartitem.name}
                 renderItem={({item}) => (
                     <CartItem
-                        title={item.title}
+                        title={item.name}
                         price={item.price}
                         image={item.image}
                         quantity={item.quantity}
@@ -113,6 +83,7 @@ function CartScreen(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingBottom: 130
     },
     separator: {
         width: '100%',

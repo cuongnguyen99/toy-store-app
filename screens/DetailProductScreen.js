@@ -1,20 +1,34 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {StyleSheet, ImageBackground, View, TouchableOpacity} from 'react-native';
+import SimpleToast from 'react-native-simple-toast';
+
 import { AppText, Button } from '../components/common';
 import color from '../config/colors';
 import Screen from './Screen';
+import CartContext from '../auth/CartContext';
 
-function DetailProductScreen({title, price, desception}) {
+function DetailProductScreen({title, price, desception, route, navigation}) {
+    const product = route.params;
+    const {cart, setCart} = useContext(CartContext);
+
+    const handleAddToCart = (product) => {
+        const newProduct = {...product, quantity: 1}
+        const newCart = [...cart, newProduct];
+        console.log(newCart);
+        setCart(newCart);
+        SimpleToast.showWithGravity('Thêm vào giỏ hàng thành công!', SimpleToast.SHORT, SimpleToast.CENTER);
+    }
+
     return (
         <Screen style={styles.container}>
-            <ImageBackground style={styles.image} source={require('../assets/images/sport.jpg')}/>
+            <ImageBackground style={styles.image} source={{uri: product.image}}/>
 
             <View style={styles.displayInner}>
-                <AppText style={styles.title} numberOfLines={2} ellipsizeMode='clip'>{"Đồ chơi 4 xe công trình NÔNG NGHIỆP lắp ráp ốc vít chạy trớn XY01-1"}</AppText>
+                <AppText style={styles.title} numberOfLines={2} ellipsizeMode='clip'>{product.name}</AppText>
                 <View style={styles.priceInner}>
                     <AppText style={{fontSize: 24}}>Giá : </AppText>
-                    <AppText style={styles.price}>{"12000000"}đ</AppText>
+                    <AppText style={styles.price}>{product.price}đ</AppText>
                 </View>
                 <View style={styles.descriptionInner}>
                     <AppText style={{}}>Mô tả sản phẩm : </AppText>
@@ -22,7 +36,7 @@ function DetailProductScreen({title, price, desception}) {
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.buttonInner} activeOpacity={0.7}>
+            <TouchableOpacity style={styles.buttonInner} activeOpacity={0.7} onPress={() => handleAddToCart(product)}>
                 <MaterialCommunityIcons name="cart-plus" size={35} color={color.sub_background}/>
             </TouchableOpacity>
         </Screen>
@@ -56,7 +70,7 @@ const styles = StyleSheet.create({
     },
     price:{
         fontSize: 28,
-        color: color.primary
+        color: color.price
     },
     descriptionInner: {
         marginTop: 30

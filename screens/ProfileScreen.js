@@ -1,10 +1,12 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import React, { useContext } from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+
 import { AppText, Button, Icon } from '../components/common';
 import { ListItem } from '../components/lists';
 import ListItemSeparator from '../components/lists/ListItemSeparator';
 import color from '../config/colors';
+import AuthContext from '../auth/context';
 
 import Screen from './Screen';
 
@@ -13,13 +15,6 @@ const menus = [
         title: "Thông tin cá nhân",
         icon: {
             name:"account-edit",
-            backgroundColor:"#fff"
-        }
-    },
-    {
-        title: "Giỏ hàng",
-        icon: {
-            name:"cart",
             backgroundColor:"#fff"
         }
     },
@@ -40,24 +35,21 @@ const menus = [
 ];
 
 function ProfileScreen({ navigation }) {
+    const { user, setUser } = useContext(AuthContext)
 
     // Handle when touch Logout button
     const handleLogout = () => {
-        navigation.navigate("Auth");
-        // console.log("Log out");
+        setUser(null);
     }
 
     return (
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <Icon style={styles.icon} name="account" backgroundColor={color.shadow} size={120} iconColor="#ecf0f1"/>
-                <AppText style={styles.name}>{"Cuongtruek"}</AppText>
-                <AppText style={styles.email}>{"kugayuma231@gmail.com"}</AppText>
+                <AppText style={styles.name}>{user.name}</AppText>
+                <AppText style={styles.email}>{user.email}</AppText>
                 <View style={styles.listing}>
                     <ListItem style={styles.listingItem} title="Thông tin cá nhân" iconComponent={<MaterialCommunityIcons size={32} name="account-edit" color="#2980b9"/>}/>
-                    <ListItemSeparator/>
-                    
-                    <ListItem style={styles.listingItem} title="Giỏ hàng" iconComponent={<MaterialCommunityIcons size={32} name="cart" color="#2ed573"/>}/>
                     <ListItemSeparator/>
 
                     <ListItem style={styles.listingItem} title="Đơn mua" iconComponent={<MaterialCommunityIcons size={32} name="clipboard-text" color="#d63031"/>}/>

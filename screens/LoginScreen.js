@@ -34,7 +34,6 @@ function LoginScreen({ navigation }) {
 
         setloginFail(false);
         const accessToken = result.data.accesstoken;
-        console.log(accessToken);
 
         const res = await userApi.getUserInfor(accessToken);
         if(!res.ok) {
@@ -43,7 +42,7 @@ function LoginScreen({ navigation }) {
         }
         setloginFail(false);
         const user = res.data;
-        console.log(user.name);
+        authContext.setUser(user);
     }
 
     // When click on register text
@@ -55,12 +54,6 @@ function LoginScreen({ navigation }) {
     const onForgetPasswordPress = () => {
         console.log("Forget password button");
     }
-
-    // if(isLoading == true) {
-    //     return (
-    //         <WelcomeLoading visible={isLoading}/>
-    //     );
-    // }
 
     return(
         <Screen
