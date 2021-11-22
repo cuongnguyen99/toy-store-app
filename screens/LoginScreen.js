@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Image,ImageBackground, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -64,7 +64,7 @@ function LoginScreen({ navigation }) {
                 source={require("../assets/images/logo.png")}
             />
             <Formik
-                initialValues={{email: "", password: ""}}
+                initialValues={{email: "nhan19@gmail.com", password: "12345678"}}
                 validationSchema = {validationSchema}
                 onSubmit={handleLogin}
             >

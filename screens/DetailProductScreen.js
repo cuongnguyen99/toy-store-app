@@ -3,27 +3,32 @@ import React, { useContext, useState } from 'react';
 import {StyleSheet, ImageBackground, View, TouchableOpacity} from 'react-native';
 import SimpleToast from 'react-native-simple-toast';
 
-import { AppText, Button } from '../components/common';
+import { AppText, Button, Icon } from '../components/common';
 import color from '../config/colors';
 import Screen from './Screen';
 import CartContext from '../auth/CartContext';
-
 function DetailProductScreen({title, price, desception, route, navigation}) {
     const product = route.params;
     const {cart, setCart} = useContext(CartContext);
 
+    const handleGoBack = () => {
+        navigation.goBack(null);
+    }
+
     const handleAddToCart = (product) => {
         const newProduct = {...product, quantity: 1}
         const newCart = [...cart, newProduct];
-        console.log(newCart);
         setCart(newCart);
         SimpleToast.showWithGravity('Thêm vào giỏ hàng thành công!', SimpleToast.SHORT, SimpleToast.CENTER);
     }
 
     return (
         <Screen style={styles.container}>
-            <ImageBackground style={styles.image} source={{uri: product.image}}/>
-
+            <ImageBackground style={styles.image} source={{uri: product.image}}>
+                <TouchableOpacity activeOpacity={0.1} onPress={handleGoBack} style={styles.backBtn}>
+                    <MaterialCommunityIcons name="keyboard-backspace" size={30} color={color.black}/>
+                </TouchableOpacity>
+            </ImageBackground>
             <View style={styles.displayInner}>
                 <AppText style={styles.title} numberOfLines={2} ellipsizeMode='clip'>{product.name}</AppText>
                 <View style={styles.priceInner}>
@@ -93,6 +98,17 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 0,
         height: 50
+    },
+    backBtn: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        backgroundColor: "#c5c6d0",
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50
     }
 })
 

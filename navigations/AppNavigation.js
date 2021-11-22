@@ -5,6 +5,8 @@ import MainNavigation from './MainNavigation';
 import AccountNavigation from './AccountNavigation';
 import FeedNavigation from './FeedNavigation';
 import CartContext from '../auth/CartContext';
+import { AppState } from 'react-native';
+import PaymentScreen from '../screens/PaymentScreen';
 
 const App = createNativeStackNavigator();
 
@@ -21,6 +23,13 @@ const AppNavigation = () => {
                 <App.Screen name="Main" component={MainNavigation}/>
                 <App.Screen name="Profile" component={AccountNavigation}/>
                 <App.Screen name="Product" component={FeedNavigation}/>
+                <App.Screen name="Payment" component={PaymentScreen}
+                    options={{
+                        headerShown: true,
+                        title: 'Thanh toán',
+                        headerTitleAlign: 'center'
+                    }}
+                />
             </App.Navigator>
         </CartContext.Provider>
     );

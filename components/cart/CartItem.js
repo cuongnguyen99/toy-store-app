@@ -25,7 +25,7 @@ function CartItem({title, price, image, quantity ,renderRightActions, onAddPress
 
 const styles = StyleSheet.create({
     container: {
-        // marginTop: 10,
+        marginTop: 5,
         flexDirection: 'row',
         backgroundColor: color.sub_background,
         alignItems: 'center',

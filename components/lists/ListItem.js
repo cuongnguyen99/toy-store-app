@@ -2,11 +2,11 @@ import React from 'react';
 import {StyleSheet, TouchableHighlight, View, Text} from 'react-native';
 import color from '../../config/colors';
 
-function ListItem({title, subtitle, image, iconComponent, style}) {
+function ListItem({title, subtitle, image, iconComponent, style, onPress}) {
     return (
         <TouchableHighlight
             underlayColor= "#f1f1f1"
-            onPress={() => console.log()}
+            onPress={onPress}
             style={style}   
         >
             <View style={[styles.container]}>

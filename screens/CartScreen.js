@@ -9,7 +9,7 @@ import color from '../config/colors';
 import Screen from './Screen';
 import CartContext from '../auth/CartContext';
 
-function CartScreen(props) {
+function CartScreen({route, navigation}) {
     const {cart, setCart} = useContext(CartContext);
     const [total, setTotal] = useState(0);
 
@@ -45,12 +45,16 @@ function CartScreen(props) {
         setCart(newProducts);
     }
 
+    const handlePress = () => {
+        navigation.navigate("Payment", {total: total});
+    }
+
     useEffect( () => {
         totalPrice(); 
      }, [cart] )
 
     return (
-        <Screen style={styles.container}>
+        <View style={styles.container}>
             <FlatList
                 data={cart}
                 keyExtractor={(cartitem) => cartitem.name}
@@ -74,16 +78,18 @@ function CartScreen(props) {
                     <AppText style={styles.total_title}>Tổng tiền:</AppText>
                     <AppText style={styles.total_price}>{total}đ</AppText>
                 </View>
-                <Button title="Đặt hàng" style={styles.submit}/>
+                <Button title="Đặt hàng" style={styles.submit} onPress={handlePress}/>
             </View>
-        </Screen>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingBottom: 130
+        paddingBottom: 130,
+        paddingTop: 0,
+        backgroundColor: color.background
     },
     separator: {
         width: '100%',

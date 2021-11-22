@@ -6,6 +6,7 @@ import AccountNavigation from '../navigations/AccountNavigation';
 import color from '../config/colors';
 import CategoryNavigation from './CategoryNavigation';
 import CartScreen from '../screens/CartScreen';
+import PaymentNavigation from './PaymentNavigation';
 
 const Tab = createBottomTabNavigator();
 

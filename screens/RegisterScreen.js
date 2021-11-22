@@ -25,25 +25,24 @@ function RegisterScreen() {
     // const apiUrl = "https://pbl6-toystores.herokuapp.com/user/register";
     const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
-    const [account, setAccount] = useState({});
     const [err, setErr] = useState(false);
     const [errMess, setErrMess] = useState("");
     const [uploadVisible, setUploadVisible] = useState(false);
     const [progress, setProgress] = useState(0);
 
-    const loadingUsers = async () => {
-        setLoading(true);
-        const res = await userApi.getUsers();
+    // const loadingUsers = async () => {
+    //     setLoading(true);
+    //     const res = await userApi.getUsers();
 
-        if(!res.ok) return setErr(true);
+    //     if(!res.ok) return setErr(true);
 
-        setErr(false);
-        setUsers(res.data);
-    }
+    //     setErr(false);
+    //     setUsers(res.data);
+    // }
 
-    useEffect(() => {
-        loadingUsers();
-    }, []);
+    // useEffect(() => {
+    //     loadingUsers();
+    // }, []);
 
     // On Press Sign In Button
     const handleSubmit= async (user, {resetForm}) => {

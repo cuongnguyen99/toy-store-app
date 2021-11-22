@@ -42,6 +42,10 @@ function ProfileScreen({ navigation }) {
         setUser(null);
     }
 
+    const handleBill = () => {
+        navigation.navigate("Bill");
+    }
+
     return (
         <Screen style={styles.screen}>
             <View style={styles.container}>
@@ -52,7 +56,7 @@ function ProfileScreen({ navigation }) {
                     <ListItem style={styles.listingItem} title="Thông tin cá nhân" iconComponent={<MaterialCommunityIcons size={32} name="account-edit" color="#2980b9"/>}/>
                     <ListItemSeparator/>
 
-                    <ListItem style={styles.listingItem} title="Đơn mua" iconComponent={<MaterialCommunityIcons size={32} name="clipboard-text" color="#d63031"/>}/>
+                    <ListItem onPress={handleBill} style={styles.listingItem} title="Đơn mua" iconComponent={<MaterialCommunityIcons size={32} name="clipboard-text" color="#d63031"/>}/>
                     <ListItemSeparator/>
 
                     <ListItem style={styles.listingItem} title="Đổi mật khẩu" iconComponent={<MaterialCommunityIcons size={32} name="key-variant" color="#2f3542"/>}/>
