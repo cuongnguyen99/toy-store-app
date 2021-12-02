@@ -1,48 +1,38 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+
 import BillItem from '../components/cart/BillItem';
 import color from '../config/colors';
 
-const initData = [
-    {
-        billID: '0123456789PH',
-        totalPrice: 1000000,
-        status: [
-            'Chưa xác nhận',
-            'Đã xác nhận',
-            'Đang vận chuyển',
-            'Đã giao hàng'
-        ]
-    },
-    {
-        billID: '1123456789PH',
-        totalPrice: 1000000,
-        status: [
-            'Chưa xác nhận'
-        ]
-    },
-    {
-        billID: '2123456789PH',
-        totalPrice: 1000000,
-        status: [
-            'Chưa xác nhận',
-            'Đã xác nhận',
-            'Đang vận chuyển'
-        ]
-    },
-];
+import AuthContext from '../auth/context';
+import paymentApi from '../api/payment';
 
 function BillScreen(props) {
+    const {user, setUser} = useContext(AuthContext);
+    const [listBill, setListBill] = useState([]);
+
+    const getListBill = async () => {
+        const result = await paymentApi.getBill(user.email);
+        if(!result.ok) {
+            console.log("Get list bill error!");
+        }
+        setListBill(result.data);
+    }
+
+    useEffect(() => {
+        getListBill();
+    },[])
+
     return (
         <View style={styles.container}>
             <FlatList
-                data={initData}
-                keyExtractor={(billItem) => billItem.billID}
+                data={listBill}
+                keyExtractor={bill => bill.id}
                 renderItem={({item}) => (
                     <BillItem 
-                        billId={item.billID}
-                        totalPrice={item.totalPrice}
-                        status={item.status}
+                        billId={item.id}
+                        totalPrice={item.total}
+                        status={item.billstatus}
                     />
                 )}
             />

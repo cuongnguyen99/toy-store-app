@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import * as Yup from 'yup';
 import {Formik} from 'formik';
+import Toast from 'react-native-simple-toast';
 
 import Screen from './Screen';
 import { AppText, AppTextInput, Button } from '../components/common';
 import color from '../config/colors';
 import PaymentItem from '../components/cart/PaymentItem';
 import ListItemSeparator from '../components/lists/ListItemSeparator';
+
+import paymentApi from '../api/payment';
+import CartContext from '../auth/CartContext';
+import AuthContext from '../auth/context';
+import UploadScreen from './UploadScreen';
 
 const validationSchema = Yup.object().shape({
     fullname: Yup.string().required('Vui lòng điền họ tên người nhận!'),
@@ -17,55 +23,35 @@ const validationSchema = Yup.object().shape({
     phone: Yup.string().required('Vui lòng điền số điện thoại người nhận!'),
 })
 
-const initialData = [
-    {
-        title: 'Đồ chơi 1',
-        price: 100000,
-        quantity: 2,
-        image: "https://csfood.vn/wp-content/uploads/2016/04/Bia-Heineken-Lon.jpg"
-    },
-    {
-        title: 'Đồ chơi 2',
-        price: 100000,
-        quantity: 2,
-        image: "https://csfood.vn/wp-content/uploads/2016/04/Bia-Heineken-Lon.jpg"
-    },
-    {
-        title: 'Đồ chơi 3',
-        price: 100000,
-        quantity: 2,
-        image: "https://csfood.vn/wp-content/uploads/2016/04/Bia-Heineken-Lon.jpg"
-    },
-    {
-        title: 'Đồ chơi 4',
-        price: 100000,
-        quantity: 2,
-        image: "https://csfood.vn/wp-content/uploads/2016/04/Bia-Heineken-Lon.jpg"
-    },
-    {
-        title: 'Đồ chơi 5',
-        price: 100000,
-        quantity: 2,
-        image: "https://csfood.vn/wp-content/uploads/2016/04/Bia-Heineken-Lon.jpg"
-    },
-    {
-        title: 'Đồ chơi 6',
-        price: 100000,
-        quantity: 2,
-        image: "https://csfood.vn/wp-content/uploads/2016/04/Bia-Heineken-Lon.jpg"
-    },
-]
-
-function PaymentScreen({route}) {
+function PaymentScreen({route, navigation}) {
+    const {cart, setCart} = useContext(CartContext);
+    const {user, setUser} = useContext(AuthContext);
+    const [uploadVisible, setUploadVisible] = useState(false);
+    const [progress, setProgress] = useState(0);
     const totalPay = route.params.total;
-    const prePay = totalPay/2;
+    const prePay = 0;
 
-    const handleSubmit = () => {
-        return;
+    const handleSubmit = async (data) => {
+        setProgress(0);
+        setUploadVisible(true);
+        const result = await paymentApi.createBill(cart, data, prePay, totalPay, user.email, progress => setProgress(progress));
+        if(!result.ok) {
+            setUploadVisible(false);
+            return Toast.showWithGravity("Đã xảy ra lỗi! Vui lòng thử lại!", Toast.LONG, Toast.CENTER);
+        }
     }
 
     return (
     <View style={styles.container}>
+        <UploadScreen
+            onDone={() => {
+                setUploadVisible(false);
+                setCart([]);
+                navigation.goBack();
+            }}
+            progress={progress}
+            visible={uploadVisible}
+        />
         <Formik
             initialValues={{
                 fullname: "",
@@ -139,11 +125,11 @@ function PaymentScreen({route}) {
                     <View style={styles.paymentList}>
                         <AppText style={styles.listTitle}>Danh sách sản phẩm:</AppText>
                         <FlatList
-                            data={initialData}
-                            keyExtractor= {(data) => data.title}
-                            renderItem={({item}) => (
+                            data={cart}
+                            keyExtractor = {(cartitem) => cartitem.name}
+                            renderItem = {({item}) => (
                                 <PaymentItem
-                                    title={item.title}
+                                    title={item.name}
                                     price={item.price}
                                     quantity={item.quantity}
                                     image={item.image}
@@ -162,7 +148,7 @@ function PaymentScreen({route}) {
                             <AppText style={styles.total_title}>Trả trước:</AppText>
                             <AppText style={styles.total_price}>{prePay}đ</AppText>
                         </View>
-                        <Button title="Thanh toán với Paypal" style={styles.submit}/>
+                        <Button title="Thanh toán" style={styles.submit} onPress={handleSubmit}/>
                     </View>
                 </>
             )}

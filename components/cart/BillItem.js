@@ -11,7 +11,7 @@ function BillItem({billId, totalPrice, status}) {
                 <AppText style={styles.billId}>Mã hóa đơn: {billId}</AppText>
                 <AppText style={styles.totalPrice}>Tổng tiền: {totalPrice}đ</AppText>
             </View>
-            <AppText style={styles.status}>{status[status.length-1]}</AppText>
+            <AppText style={styles.status}>{status}</AppText>
         </View>
     );
 }
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     status: {
         textAlignVertical: 'bottom',
         color: color.primary,
-        fontSize: 14
+        fontSize: 14,
     }
 })
 

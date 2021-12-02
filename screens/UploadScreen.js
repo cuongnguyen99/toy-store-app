@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, StyleSheet, Text } from 'react-native';
+import { Modal, View, StyleSheet, Text} from 'react-native';
 
 import * as Progress from 'react-native-progress';
 import color from '../config/colors';
@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
     animation: {
         width: 200
     }
-})
+});
 
 export default UploadScreen;

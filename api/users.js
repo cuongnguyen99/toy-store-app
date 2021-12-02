@@ -2,9 +2,8 @@ import api from "./client";
 
 const signin = "user/login";
 const userInfor = "user/infor";
-// const endpoint = "users";
 
-const login = (email, password) => api.post(signin, {email, password});
+const login = (email, password, onUploadProgress) => api.post(signin, {email, password});
 
 const getUserInfor = (accessToken) => {
     return api.get(userInfor,"",{

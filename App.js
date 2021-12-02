@@ -18,8 +18,4 @@ export default function App() {
       </NavigationContainer>
     </AuthContext.Provider>
   );
-
-  // return (
-  //   <PaymentScreen/>
-  // );
 }

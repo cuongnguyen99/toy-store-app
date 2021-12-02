@@ -12,6 +12,7 @@ import ErrorMessage from '../components/common/ErrorMessage';
 
 import userApi from '../api/users';
 import AuthContext from '../auth/context';
+import UploadScreen from './UploadScreen';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Please enter the username'),
@@ -64,7 +65,7 @@ function LoginScreen({ navigation }) {
                 source={require("../assets/images/logo.png")}
             />
             <Formik
-                initialValues={{email: "nhan19@gmail.com", password: "12345678"}}
+                initialValues={{email: "", password: ""}}
                 validationSchema = {validationSchema}
                 onSubmit={handleLogin}
             >
