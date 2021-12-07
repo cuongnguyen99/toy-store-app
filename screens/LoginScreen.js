@@ -7,12 +7,11 @@ import {AppTextInput, Button, AppText} from '../components/common';
 import { HairLine } from '../components/lists';
 import Screen from './Screen';
 import color from '../config/colors';
-import WelcomeLoading from '../components/lists/WelcomeLoading';
 import ErrorMessage from '../components/common/ErrorMessage';
 
 import userApi from '../api/users';
 import AuthContext from '../auth/context';
-import UploadScreen from './UploadScreen';
+import cache from '../utility/cache';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Please enter the username'),
@@ -36,6 +35,8 @@ function LoginScreen({ navigation }) {
         setloginFail(false);
         const accessToken = result.data.accesstoken;
 
+        cache.store("AccessToken", accessToken);
+
         const res = await userApi.getUserInfor(accessToken);
         if(!res.ok) {
             setErrMessage("Lỗi kết nối tới máy chủ. Vui lòng thử lại sau!");
@@ -48,7 +49,7 @@ function LoginScreen({ navigation }) {
 
     // When click on register text
     const onRegisterPress = () => {       
-        console.log("Forget password button");
+        navigation.navigate("Register");
     }
 
     // When click on forget password text
@@ -65,7 +66,7 @@ function LoginScreen({ navigation }) {
                 source={require("../assets/images/logo.png")}
             />
             <Formik
-                initialValues={{email: "", password: ""}}
+                initialValues={{email: "cuongstewie2k@gmail.com", password: "123456"}}
                 validationSchema = {validationSchema}
                 onSubmit={handleLogin}
             >

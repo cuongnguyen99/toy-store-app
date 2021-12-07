@@ -8,6 +8,7 @@ const isExpired = (item) => {
     const storedTime = moment(item.timestamp);
     return now.diff(storedTime, 'days') > 3;
 };
+
 const store = async (key, value) => {
     try {
         const item = {
@@ -15,13 +16,15 @@ const store = async (key, value) => {
             timestamp: Date.now(),
         }
         await AsyncStorage.setItem(prefix+key, JSON.stringify(item));
+
     } catch (error) {
         console.log(error);
     }
 }
+
 const get = async (key) => {
     try {
-        const value = AsyncStorage.getItem(prefix+key);
+        const value = await AsyncStorage.getItem(prefix+key);
         const item = JSON.parse(value);
 
         if(!item) return null;

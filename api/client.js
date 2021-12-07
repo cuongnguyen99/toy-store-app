@@ -2,8 +2,7 @@ import {create} from 'apisauce';
 import cache from '../utility/cache';
 
 const api = create({
-    baseURL: 'https://pbl6-toystores.herokuapp.com/'
-    // baseURL: 'https://6171698bc20f3a001705fcb1.mockapi.io/api/'
+    baseURL: 'http://192.168.1.4:4000/'
 });
 
 const get = api.get;

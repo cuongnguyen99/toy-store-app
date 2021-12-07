@@ -13,7 +13,7 @@ import userApi from '../api/users';
 import UploadScreen from './UploadScreen';
 
 const registerSchema = Yup.object().shape({
-    username: Yup.string().required("Vui lòng nhập tài khoản!").min(4, "Vui lòng nhập tài khoản có độ dài >4 ký tự!").label("Username"),
+    username: Yup.string().required("Vui lòng điền tên người dùng!").label("Username"),
     password: Yup.string().required("Vui lòng điền mật khẩu!").min(6, "Mật khẩu phải >6 ký tự!").max(16, "Mật khẩu không được vượt quá 16 ký tự!"),
     passwordConfirm: Yup.string().oneOf([Yup.ref("password")], "Mật khẩu không khớp!").required("Vui lòng xác nhận lại mật khẩu"),
     // fullname: Yup.string().required("Vui lòng điền họ tên người dùng!"),
@@ -46,25 +46,27 @@ function RegisterScreen() {
 
     // On Press Sign In Button
     const handleSubmit= async (user, {resetForm}) => {
-        var check = users.every(item => {
-            return item.username != user.username; 
-        })
-        if(check) {
-            setProgress(0);
-            setUploadVisible(true);
-            const result = await userApi.addUser(user, progress => setProgress(progress));
+        setProgress(0);
+        setUploadVisible(true);
+        const result = await userApi.addUser(user, progress => setProgress(progress));
 
-            if(!result.ok) {
-                setUploadVisible(false);
-                return Toast.showWithGravity("Đã xảy ra lỗi! Vui lòng thử lại!", Toast.LONG, Toast.CENTER);
-            }
-            resetForm({});
-            setErr(false);
+        if(!result.ok) {
+            setUploadVisible(false);
+            return Toast.showWithGravity("Đã xảy ra lỗi! Vui lòng thử lại!", Toast.LONG, Toast.CENTER);
         }
-        else {
-            setErr(true);
-            setErrMess("Tài khoản đã tồn tại!");
-        }
+        resetForm({});
+        setErr(false);
+        
+        // var check = users.every(item => {
+        //     return item.username != user.username; 
+        // })
+        // if(check) {
+        //     
+        // }
+        // else {
+        //     setErr(true);
+        //     setErrMess("Tài khoản đã tồn tại!");
+        // }
     }
 
     return (
@@ -95,18 +97,16 @@ function RegisterScreen() {
                 { ({handleChange, handleSubmit, setFieldTouched, setFieldValue, touched, errors, values}) => (
                     <>
                         <View style={styles.registerForm}>
-                            <AppTextInput 
-                                content="Username" 
+                        <AppTextInput 
+                                content="Email" 
                                 style={styles.textInput}
-                                onChangeText={text => setFieldValue("username", text)}
-                                value={values["username"]}
-                                onBlur={() => setFieldTouched("username")}
+                                keyboardType="email-address"
+                                onChangeText={text => setFieldValue("email", text)}
+                                value = {values["email"]}
+                                onBlur={() => setFieldTouched("email")}
                             />
-                            <AppText style={styles.warning}>
-                                {touched.username && errors.username ? errors.username : null}
-                                {touched.username && err ? errMess : null}
-                            </AppText>
-   
+                            <AppText style={styles.warning}>{touched.email && errors.email ? errors.email : null}</AppText>
+
                             <AppTextInput 
                                 content="Password" 
                                 style={styles.textInput} 
@@ -126,17 +126,18 @@ function RegisterScreen() {
                                 onBlur={() => setFieldTouched("passwordConfirm")}
                             />
                             <AppText style={styles.warning}>{touched.passwordConfirm && errors.passwordConfirm ? errors.passwordConfirm : null}</AppText>
-
-                            <AppTextInput 
-                                content="Email" 
-                                style={styles.textInput}
-                                keyboardType="email-address"
-                                onChangeText={text => setFieldValue("email", text)}
-                                value = {values["email"]}
-                                onBlur={() => setFieldTouched("email")}
-                            />
-                            <AppText style={styles.warning}>{touched.email && errors.email ? errors.email : null}</AppText>
                             
+                            <AppTextInput 
+                                content="Username" 
+                                style={styles.textInput}
+                                onChangeText={text => setFieldValue("username", text)}
+                                value={values["username"]}
+                                onBlur={() => setFieldTouched("username")}
+                            />
+                            <AppText style={styles.warning}>
+                                {touched.username && errors.username ? errors.username : null}
+                                {touched.username && err ? errMess : null}
+                            </AppText>
                         </View>
                         <View style={styles.registerButton}>
                             <Button title="Đăng ký" onPress={handleSubmit}></Button>

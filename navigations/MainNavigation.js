@@ -7,6 +7,7 @@ import color from '../config/colors';
 import CategoryNavigation from './CategoryNavigation';
 import CartScreen from '../screens/CartScreen';
 import PaymentNavigation from './PaymentNavigation';
+import CategoryListScreen from '../screens/CategoryListScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +19,7 @@ function MainNavigation(props) {
             tabBarHideOnKeyboard: true,
           }}
         >
-          <Tab.Screen name="Home" component={CategoryNavigation}
+          {/* <Tab.Screen name="Home" component={CategoryListScreen}
             options={{
               title: "Trang chủ",
               headerTitleAlign: 'center',
@@ -28,7 +29,7 @@ function MainNavigation(props) {
                 }}
               />),
             }}
-          />
+          /> */}
           <Tab.Screen name="Cart" component={CartScreen} 
             options={{
               title: "Giỏ hàng",

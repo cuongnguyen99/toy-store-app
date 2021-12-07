@@ -6,6 +6,8 @@ import color from '../config/colors';
 import LoadingIndicator from '../components/lists/LoadingIndicator';
 import TopLoadingIndicator from '../components/lists/TopLoadingIndicator';
 
+import cache from '../utility/cache';
+
 const Tab = createMaterialTopTabNavigator();
 
 
@@ -38,6 +40,7 @@ function CategoryNavigation() {
 
     useEffect( () => {
         getDatas();
+
     }, [])
     if(isLoading){
         return <LoadingIndicator 

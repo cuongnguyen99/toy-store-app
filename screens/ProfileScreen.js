@@ -1,14 +1,14 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import React, { useContext } from 'react';
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import { AppText, Button, Icon } from '../components/common';
 import { ListItem } from '../components/lists';
 import ListItemSeparator from '../components/lists/ListItemSeparator';
 import color from '../config/colors';
 import AuthContext from '../auth/context';
-
 import Screen from './Screen';
+
 
 const menus = [
     {
