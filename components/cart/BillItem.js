@@ -9,7 +9,7 @@ function BillItem({billId, totalPrice, status}) {
         <View style={styles.container}>
             <View style={styles.billInner}>
                 <AppText style={styles.billId}>Mã hóa đơn: {billId}</AppText>
-                <AppText style={styles.totalPrice}>Tổng tiền: {totalPrice}đ</AppText>
+                <AppText style={styles.totalPrice}>Tổng tiền: ${totalPrice}</AppText>
             </View>
             <AppText style={styles.status}>{status}</AppText>
         </View>

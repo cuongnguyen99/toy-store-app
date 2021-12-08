@@ -4,7 +4,7 @@ const signin = "user/login";
 const userInfor = "user/infor";
 const register = "user/register";
 
-const login = (email, password, onUploadProgress) => api.post(signin, {email, password});
+const login = (email, password) => api.post(signin, {email, password});
 
 const getUserInfor = (accessToken) => {
     return api.get(userInfor,"",{

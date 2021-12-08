@@ -6,6 +6,8 @@ import OfflineNotice from './components/common/OfflineNotice';
 import AuthContext from './auth/context';
 import AppNavigation from './navigations/AppNavigation';
 
+import {Category} from './components/lists';
+
 export default function App() {
   const [user, setUser] = useState();
 

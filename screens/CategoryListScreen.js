@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 import {Category} from '../components/lists';
 import color from '../config/colors';
 
-function CategoryListScreen({route, navigation}) {
-    const categoryListing = route.params.item;
+import category from '../api/category';
 
+function CategoryListScreen({route, navigation}) {
+    const [categories, setCategories] = useState([]);
+    
+    const getCategory = async () => {
+        const result = await category.getCategory();
+
+        if(!result.ok){
+            console.log("Have an error when get Category");
+        }
+        const data = result.data;
+        setCategories(data);
+    }
+
+    useEffect(()=>{
+        getCategory();
+    }, []);
+    
     return (
         <View style={styles.container}>
             <FlatList
-                data={categoryListing}
-                keyExtractor={categorie => categorie.name}
+                data={categories}
+                keyExtractor={category => category._id}
                 renderItem={ ({item}) =>
                     <Category
                         title={item.name}
-                        image= {item.image}
-                        onPress={() => navigation.navigate("Product", item.product)}
+                        image={item.image}
+                        onPress={() => navigation.navigate("Product", item._id)}
                     />
                 }
             />

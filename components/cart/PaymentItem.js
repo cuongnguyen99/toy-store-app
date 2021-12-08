@@ -10,7 +10,7 @@ function PaymentItem({title, price, image, quantity}) {
             <Image style={styles.image} source={{uri: image}}/>
             <View style={styles.infor}>
                 <AppText style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{title}</AppText>
-                <AppText style={styles.price}>{price}đ</AppText>
+                <AppText style={styles.price}>${price}</AppText>
             </View>
             <AppText style={styles.quantity}>x{quantity}</AppText>
         </View>

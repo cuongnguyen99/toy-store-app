@@ -19,7 +19,7 @@ function MainNavigation(props) {
             tabBarHideOnKeyboard: true,
           }}
         >
-          {/* <Tab.Screen name="Home" component={CategoryListScreen}
+          <Tab.Screen name="Home" component={CategoryListScreen}
             options={{
               title: "Trang chủ",
               headerTitleAlign: 'center',
@@ -29,7 +29,7 @@ function MainNavigation(props) {
                 }}
               />),
             }}
-          /> */}
+          />
           <Tab.Screen name="Cart" component={CartScreen} 
             options={{
               title: "Giỏ hàng",
