@@ -3,7 +3,7 @@ const color = {
     secondary: "#A4DBBA",   //Sub-button color
     text: "#010101",
     sub_text: "#8c8c8c",
-    background: "#f6f6f6",
+    background: "#fff",
     sub_background: "#fcfcfc",
     shadow: "#767676",
     icon_background: "#D8D8D8",

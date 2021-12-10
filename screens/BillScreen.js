@@ -5,14 +5,18 @@ import BillItem from '../components/cart/BillItem';
 import color from '../config/colors';
 
 import AuthContext from '../auth/context';
-import paymentApi from '../api/payment';
+import cache from '../utility/cache';
+import payment from '../api/payment';
 
 function BillScreen(props) {
     const {user, setUser} = useContext(AuthContext);
     const [listBill, setListBill] = useState([]);
 
     const getListBill = async () => {
-        const result = await paymentApi.getBill(user.email);
+        
+        const accessToken = await cache.get("AccessToken");
+        const result = await payment.getBill(accessToken);
+
         if(!result.ok) {
             console.log("Get list bill error!");
         }
@@ -27,12 +31,12 @@ function BillScreen(props) {
         <View style={styles.container}>
             <FlatList
                 data={listBill}
-                keyExtractor={bill => bill.id}
+                keyExtractor={bill => bill._id}
                 renderItem={({item}) => (
                     <BillItem 
-                        billId={item.id}
+                        billId={item.paymentID}
                         totalPrice={item.total}
-                        status={item.billstatus}
+                        status={item.shippingstatus}
                     />
                 )}
             />

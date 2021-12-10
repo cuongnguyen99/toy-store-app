@@ -7,6 +7,11 @@ import { AppText, Button, Icon } from '../components/common';
 import color from '../config/colors';
 import Screen from './Screen';
 import CartContext from '../auth/CartContext';
+import ListItemSeparator from '../components/lists/ListItemSeparator';
+
+import userApi from "../api/users";
+import cache from '../utility/cache';
+
 function DetailProductScreen({title, price, desception, route, navigation}) {
     const product = route.params;
     const {cart, setCart} = useContext(CartContext);
@@ -15,29 +20,54 @@ function DetailProductScreen({title, price, desception, route, navigation}) {
         navigation.goBack(null);
     }
 
-    const handleAddToCart = (product) => {
+    const handleAddToCart = async (product) => {
         const newProduct = {...product, quantity: 1}
         const newCart = [...cart, newProduct];
+        
         setCart(newCart);
+        userApi.addToCart(newCart, await cache.get("AccessToken"));
         SimpleToast.showWithGravity('Thêm vào giỏ hàng thành công!', SimpleToast.SHORT, SimpleToast.CENTER);
     }
 
     return (
         <Screen style={styles.container}>
-            <ImageBackground style={styles.image} source={{uri: product.image}}>
+            <ImageBackground style={styles.image} source={{uri: product.mainimg.url}}>
                 <TouchableOpacity activeOpacity={0.1} onPress={handleGoBack} style={styles.backBtn}>
                     <MaterialCommunityIcons name="keyboard-backspace" size={30} color={color.black}/>
                 </TouchableOpacity>
             </ImageBackground>
             <View style={styles.displayInner}>
-                <AppText style={styles.title} numberOfLines={2} ellipsizeMode='clip'>{product.name}</AppText>
+                <AppText style={styles.title} numberOfLines={2} ellipsizeMode='clip'>{product.title}</AppText>
                 <View style={styles.priceInner}>
                     <AppText style={{fontSize: 24}}>Giá : </AppText>
-                    <AppText style={styles.price}>{product.price}đ</AppText>
+                    <AppText style={styles.price}>${product.price}</AppText>
                 </View>
+
+                <ListItemSeparator style={styles.listing}/>
                 <View style={styles.descriptionInner}>
-                    <AppText style={{}}>Mô tả sản phẩm : </AppText>
-                    <AppText style={styles.desception}>{"Khách hàng thường không quan tâm sản phẩm của bạn là gì, làm từ gì. Họ chỉ quan tâm đến công dụng của nó là gì và nó có thể giúp ích như thế nào cho họ. Đó là chưa kể đến kết quả nghiên cứu chỉ ra rằng mọi người chỉ đọc trung bình khoảng 16% nội dung trên một trang web thông thường. Vì vậy, bạn cần làm nổi bật những lợi ích của sản phẩm ngay từ đầu. Đưa những lợi ích quan trọng nhất của sản phẩm đặt lên trước tiên và thứ kém quan trọng nhất ở cuối cùng."}</AppText>
+                    <AppText style={{marginBottom: 10}}>Mô tả sản phẩm : </AppText>
+                    <AppText style={styles.desception}>{product.description}</AppText>
+                </View>
+
+                <ListItemSeparator style={styles.listing}/>
+                <View style={styles.descriptionInner}>
+                    <AppText style={{marginBottom: 10}}>Chi tiết sản phẩm:</AppText>
+                    <View style={[styles.boxDetail, {marginBottom: 4}]}>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>Kích thước:</AppText>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>{product.dimensions}</AppText>
+                    </View>
+                    <View style={[styles.boxDetail, {marginBottom: 4}]}>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>Độ tuổi:</AppText>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>{product.period}</AppText>
+                    </View>
+                    <View style={[styles.boxDetail, {marginBottom: 4}]}>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>Chất liệu:</AppText>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>{product.material}</AppText>
+                    </View>
+                    <View style={[styles.boxDetail, {marginBottom: 4}]}>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>Tình trạng:</AppText>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>{product.condition}</AppText>
+                    </View>
                 </View>
             </View>
 
@@ -59,26 +89,27 @@ const styles = StyleSheet.create({
     },
     displayInner: {
         paddingTop: 5,
-        paddingLeft: 10,
         paddingRight: 10
     },
     title: {
-        fontSize: 18,
-        fontWeight: 'normal'
+        fontSize: 24,
+        fontWeight: 'normal',
+        marginLeft: 10
     },
     priceInner: {
-        marginTop: 30,
+        marginTop: 10,
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: 10
     },
     price:{
-        fontSize: 28,
-        color: color.price
+        fontSize: 24,
+        color: color.primary
     },
     descriptionInner: {
-        marginTop: 30
+        marginTop: 20,
+        marginLeft: 10
     },
     desception: {
         fontSize: 14,
@@ -109,6 +140,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50
+    },
+    listing: {
+        backgroundColor: "#efefef",
+        height: 10,
+        width: "120%",
+        marginLeft: 0,
+        marginTop: 20
+    }, 
+    boxDetail: {
+        flexDirection: 'row'
     }
 })
 

@@ -11,7 +11,7 @@ function CartItem({title, price, image, quantity ,renderRightActions, onAddPress
                 <Image style={styles.image} source={{uri: image}}/>
                 <View style={styles.infor}>
                     <AppText style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{title}</AppText>
-                    <AppText style={styles.price}>{price}đ</AppText>
+                    <AppText style={styles.price}>${price}</AppText>
                 </View>
                 <View style={styles.control_quantity}>
                     <Text onPress={onSubtractPress} style={styles.subtract}>-</Text>
@@ -42,10 +42,12 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     title: {
-        marginBottom: 7
+        marginBottom: 7,
+        fontSize: 16
     },
     price: {
-        fontSize: 15,
+        fontSize: 18,
+        color: color.primary,
     },
     control_quantity: {
         flexDirection: 'row',

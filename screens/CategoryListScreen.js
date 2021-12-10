@@ -5,10 +5,16 @@ import {Category} from '../components/lists';
 import color from '../config/colors';
 
 import category from '../api/category';
+import cache from '../utility/cache';
 
 function CategoryListScreen({route, navigation}) {
     const [categories, setCategories] = useState([]);
     
+    const getCart = async () => {
+        const accessToken = await cache.get("AccessToken");
+        console.log(accessToken);
+    }
+
     const getCategory = async () => {
         const result = await category.getCategory();
 
@@ -42,7 +48,7 @@ function CategoryListScreen({route, navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: color.background,
+        backgroundColor: color.background
     }
 })
 

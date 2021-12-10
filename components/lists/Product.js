@@ -4,7 +4,7 @@ import { View, StyleSheet, Image, ImageBackground, TouchableHighlight } from 're
 import { AppText } from '../common';
 import color from '../../config/colors';
 
-const heightProduct = 320;
+const heightProduct = 300;
 const heightImg = (320/100)*70;
 
 function Product({image, title, price, onSale=null, onPress}) {
@@ -25,8 +25,7 @@ function Product({image, title, price, onSale=null, onPress}) {
                     <View style={styles.productContent}>
                         <AppText 
                             style={styles.productTitle} 
-                            numberOfLines={2}
-                            ellipsizeMode="tail"
+                            numberOfLines={1}
                         >
                                 {title}
                         </AppText>
@@ -79,18 +78,14 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     productTitle: {
-        position: 'absolute',
         textAlign: 'center',
         width:"100%",
-        top: 4,
         fontSize: 15
     },
     productPrice: {
         color: color.primary,
-        position: 'absolute',
-        bottom: 0,
-        marginBottom: 10,
-        
+        marginBottom: 5,
+        marginTop: 5
     },
     productInner: {
         backgroundColor: color.sub_background,

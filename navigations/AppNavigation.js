@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
 import MainNavigation from './MainNavigation';
@@ -8,10 +8,28 @@ import CartContext from '../auth/CartContext';
 import { AppState } from 'react-native';
 import PaymentScreen from '../screens/PaymentScreen';
 
+import cache from '../utility/cache';
+import userApi from '../api/users';
+
 const App = createNativeStackNavigator();
 
 const AppNavigation = () => {
     const [cart, setCart] = useState([]);
+
+    const getCart = async () => {
+        const accessToken = await cache.get("AccessToken");
+
+        const res = await userApi.getUserInfor(accessToken);
+        if(!res.ok) {
+            setErrMessage("Fail to get Cart!");
+            return setloginFail(true);
+        }
+        setCart(res.data.cart);
+    }
+
+    useEffect(function() {
+        getCart();
+    }, []);
 
     return (
         <CartContext.Provider value={{cart, setCart}}>

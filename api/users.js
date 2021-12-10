@@ -3,6 +3,7 @@ import api from "./client";
 const signin = "user/login";
 const userInfor = "user/infor";
 const register = "user/register";
+const addCart = "user/addcart";
 
 const login = (email, password) => api.post(signin, {email, password});
 
@@ -24,4 +25,10 @@ const addUser = (user, onUploadProgress) => {
     });
 }
 
-export default {login, addUser, getUserInfor};
+const addToCart = (cart, accessToken) => {
+    return api.patch(addCart, {cart}, {
+        headers: {Authorization: accessToken}
+    })
+}
+
+export default {login, addUser, getUserInfor, addToCart};

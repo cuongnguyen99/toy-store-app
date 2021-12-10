@@ -40,7 +40,7 @@ function ListProductScreen({route, navigation}) {
                 keyExtractor={product=> product._id}
                 renderItem={({item}) => 
                     <Product
-                        image = {item.images[0].url}
+                        image = {item.mainimg.url}
                         title = {item.title}
                         price = {item.price}
                         // onSale = {item.onSale}
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: 'column',
         flexWrap: 'wrap',
-        marginTop: 0
+        marginTop: 0,
+        backgroundColor: color.background
     }
 })
 

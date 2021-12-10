@@ -1,28 +1,13 @@
-// import fakeApi from "./fakeApi";
+import api from "./client";
 
-// const endpoint = "bill";
+const endpoint = "user/history";
 
-// const getBill = (username) => {
-//     return fakeApi.get(endpoint+"?username="+username, "", {});
-// }
+// router.get('/history', auth, userCtrl.history)
 
-// const createBill = (cart, data, prePay, totalPay, email, onUploadProgress) => {
-//     const value = {
-//         cart: cart,
-//         name: data.fullname,
-//         shipaddress: data.province,
-//         shipcity: data.district,
-//         shipstate: data.state,
-//         shipphone: data.phone,
-//         paid: prePay,
-//         total: totalPay,
-//         username: email,
-//         billstatus: 'Chưa xác nhận',
-//     };
+const getBill = (accessToken) => {
+    return api.get(endpoint, "", {
+        headers: {Authorization: accessToken}
+    });
+}
 
-//     return fakeApi.post(endpoint, value, {
-//         onUploadProgress: (process) => onUploadProgress(process.loaded / process.total),
-//     });
-// }
-
-// export default {getBill, createBill};
+export default { getBill };

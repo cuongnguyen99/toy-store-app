@@ -35,10 +35,12 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     title: {
-        marginBottom: 7
+        marginBottom: 7,
+        fontSize: 16
     },
     price: {
-        fontSize: 15,
+        fontSize: 16,
+        color: color.primary
     },
     quantity: {
         flex: 0.1,

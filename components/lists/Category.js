@@ -25,10 +25,10 @@ function Category({title, image, onPress}) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
+        marginTop: 10,
         marginLeft: 20,
         marginRight: 20,
-        marginBottom: 0
+        marginBottom: 10
     }
     ,
     background: {

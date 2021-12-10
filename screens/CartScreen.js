@@ -6,8 +6,9 @@ import ListItemDelete from '../components/lists/ListItemDelete';
 import ListItemSeparator from '../components/lists/ListItemSeparator';
 import color from '../config/colors';
 
-import Screen from './Screen';
 import CartContext from '../auth/CartContext';
+import userApi from '../api/users';
+import cache from '../utility/cache';
 
 function CartScreen({route, navigation}) {
     const {cart, setCart} = useContext(CartContext);
@@ -20,21 +21,25 @@ function CartScreen({route, navigation}) {
         setTotal(total);
     }
     
-    const handleDelete = (product) => {
-        const newProducts = cart.filter( (m) => m.name != product.name);
+    const handleDelete = async (product) => {
+        const newProducts = cart.filter( (m) => m._id != product._id);
+        
         setCart(newProducts);
+        userApi.addToCart(newProducts, await cache.get("AccessToken"));
     }
 
-    const handleAddPress = (product) => {
+    const handleAddPress = async (product) => {
         const newProducts = [...cart];
         const index = newProducts.indexOf(product);
 
         newProducts[index] = {...product};
         newProducts[index].quantity++;
+
         setCart(newProducts);
+        userApi.addToCart(newProducts, await cache.get("AccessToken"));
     }
 
-    const handleSubtractPress = (product) => {
+    const handleSubtractPress = async (product) => {
         const newProducts = [...cart];
         const index = newProducts.indexOf(product);
 
@@ -42,7 +47,9 @@ function CartScreen({route, navigation}) {
         if(newProducts[index].quantity > 1 ){
             newProducts[index].quantity--;
         }
+        
         setCart(newProducts);
+        userApi.addToCart(newProducts, await cache.get("AccessToken"));
     }
 
     const handlePress = () => {
@@ -57,12 +64,12 @@ function CartScreen({route, navigation}) {
         <View style={styles.container}>
             <FlatList
                 data={cart}
-                keyExtractor={(cartitem) => cartitem.name}
+                keyExtractor={(cartitem) => cartitem._id}
                 renderItem={({item}) => (
                     <CartItem
-                        title={item.name}
+                        title={item.title}
                         price={item.price}
-                        image={item.image}
+                        image={item.mainimg.url}
                         quantity={item.quantity}
                         onAddPress={() => handleAddPress(item)}
                         onSubtractPress={() => handleSubtractPress(item)}
@@ -76,7 +83,7 @@ function CartScreen({route, navigation}) {
             <View style={styles.bottom}>
                 <View style={styles.bottom_price}>
                     <AppText style={styles.total_title}>Tổng tiền:</AppText>
-                    <AppText style={styles.total_price}>{total}đ</AppText>
+                    <AppText style={styles.total_price}>${total}</AppText>
                 </View>
                 <Button title="Đặt hàng" style={styles.submit} onPress={handlePress}/>
             </View>
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
     },
     separator: {
         width: '100%',
-        marginLeft: 0
+        marginLeft: 0,
     },
     bottom: {
         backgroundColor: color.sub_background,
@@ -114,7 +121,8 @@ const styles = StyleSheet.create({
         fontSize: 24
     },
     total_price: {
-        fontSize: 24
+        fontSize: 24,
+        color: color.primary
     },
     submit: {
         width: '60%',

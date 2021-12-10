@@ -129,10 +129,10 @@ function PaymentScreen({route, navigation}) {
                             keyExtractor = {(cartitem) => cartitem.name}
                             renderItem = {({item}) => (
                                 <PaymentItem
-                                    title={item.name}
+                                    title={item.title}
                                     price={item.price}
                                     quantity={item.quantity}
-                                    image={item.image}
+                                    image={item.mainimg.url}
                                 />
                             )}
                             ItemSeparatorComponent={() => <ListItemSeparator style={styles.separator}/>}
@@ -142,11 +142,11 @@ function PaymentScreen({route, navigation}) {
                     <View style={styles.bottom}>
                         <View style={styles.bottom_price}>
                             <AppText style={styles.total_title}>Tổng thanh toán:</AppText>
-                            <AppText style={styles.total_price}>{route.params.total}đ</AppText>
+                            <AppText style={styles.total_price}>${route.params.total}</AppText>
                         </View>
                         <View style={styles.bottom_price}>
                             <AppText style={styles.total_title}>Trả trước:</AppText>
-                            <AppText style={styles.total_price}>{prePay}đ</AppText>
+                            <AppText style={styles.total_price}>${prePay}</AppText>
                         </View>
                         <Button title="Thanh toán" style={styles.submit} onPress={handleSubmit}/>
                     </View>
@@ -202,6 +202,14 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingBottom: 10,
         paddingTop: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     },
     bottom_price: {
         flexDirection: 'row',
@@ -209,10 +217,12 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     total_title: {
-        fontSize: 18
+        fontSize: 18,
+        
     },
     total_price: {
-        fontSize: 18
+        fontSize: 18,
+        color: color.primary
     },
     submit: {
         width: '60%',
