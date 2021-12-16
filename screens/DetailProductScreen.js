@@ -54,19 +54,19 @@ function DetailProductScreen({title, price, desception, route, navigation}) {
                     <AppText style={{marginBottom: 10}}>Chi tiết sản phẩm:</AppText>
                     <View style={[styles.boxDetail, {marginBottom: 4}]}>
                         <AppText style={[styles.desception, {flex: 0.3}]}>Kích thước:</AppText>
-                        <AppText style={[styles.desception, {flex: 0.3}]}>{product.dimensions}</AppText>
+                        <AppText style={[styles.desception, {flex: 0.7}]}>{product.dimensions}</AppText>
                     </View>
                     <View style={[styles.boxDetail, {marginBottom: 4}]}>
                         <AppText style={[styles.desception, {flex: 0.3}]}>Độ tuổi:</AppText>
-                        <AppText style={[styles.desception, {flex: 0.3}]}>{product.period}</AppText>
+                        <AppText style={[styles.desception, {flex: 0.7}]}>{product.age}</AppText>
                     </View>
                     <View style={[styles.boxDetail, {marginBottom: 4}]}>
                         <AppText style={[styles.desception, {flex: 0.3}]}>Chất liệu:</AppText>
-                        <AppText style={[styles.desception, {flex: 0.3}]}>{product.material}</AppText>
+                        <AppText style={[styles.desception, {flex: 0.7}]}>{product.material}</AppText>
                     </View>
                     <View style={[styles.boxDetail, {marginBottom: 4}]}>
-                        <AppText style={[styles.desception, {flex: 0.3}]}>Tình trạng:</AppText>
-                        <AppText style={[styles.desception, {flex: 0.3}]}>{product.condition}</AppText>
+                        <AppText style={[styles.desception, {flex: 0.3}]}>Xuất xứ:</AppText>
+                        <AppText style={[styles.desception, {flex: 0.7}]}>{product.origin}</AppText>
                     </View>
                 </View>
             </View>

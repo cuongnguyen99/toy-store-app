@@ -15,6 +15,9 @@ import CartContext from '../auth/CartContext';
 import AuthContext from '../auth/context';
 import UploadScreen from './UploadScreen';
 
+import cache from '../utility/cache';
+import usersApi from '../api/users';
+
 const validationSchema = Yup.object().shape({
     fullname: Yup.string().required('Vui lòng điền họ tên người nhận!'),
     province: Yup.string().required('Vui lòng điền thông tin tỉnh/thành phố người nhận!'),
@@ -34,8 +37,13 @@ function PaymentScreen({route, navigation}) {
     const handleSubmit = async (data) => {
         setProgress(0);
         setUploadVisible(true);
-        const result = await paymentApi.createBill(cart, data, prePay, totalPay, user.email, progress => setProgress(progress));
+
+        const accessToken = await cache.get("AccessToken");
+
+        const result = await paymentApi.createBill(accessToken ,cart, data, prePay, totalPay, progress => setProgress(progress));
+
         if(!result.ok) {
+            console.log(result.originalError);
             setUploadVisible(false);
             return Toast.showWithGravity("Đã xảy ra lỗi! Vui lòng thử lại!", Toast.LONG, Toast.CENTER);
         }
@@ -44,9 +52,13 @@ function PaymentScreen({route, navigation}) {
     return (
     <View style={styles.container}>
         <UploadScreen
-            onDone={() => {
+            onDone={async () => {
+                const accessToken = await cache.get("AccessToken");
+                
                 setUploadVisible(false);
                 setCart([]);
+                usersApi.addToCart([], accessToken);
+
                 navigation.goBack();
             }}
             progress={progress}
@@ -126,7 +138,7 @@ function PaymentScreen({route, navigation}) {
                         <AppText style={styles.listTitle}>Danh sách sản phẩm:</AppText>
                         <FlatList
                             data={cart}
-                            keyExtractor = {(cartitem) => cartitem.name}
+                            keyExtractor = {(cartitem) => cartitem._id}
                             renderItem = {({item}) => (
                                 <PaymentItem
                                     title={item.title}

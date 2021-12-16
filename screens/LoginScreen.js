@@ -8,6 +8,7 @@ import { HairLine } from '../components/lists';
 import Screen from './Screen';
 import color from '../config/colors';
 import ErrorMessage from '../components/common/ErrorMessage';
+import SimpleToast from 'react-native-simple-toast';
 
 import userApi from '../api/users';
 import AuthContext from '../auth/context';
@@ -42,6 +43,12 @@ function LoginScreen({ navigation }) {
             setErrMessage("Lỗi kết nối tới máy chủ. Vui lòng thử lại sau!");
             return setloginFail(true);
         }
+
+        if(res.data.role == 1)
+        {
+            return SimpleToast.showWithGravity("Truy cập website để sử dụng chức năng dành cho Admin", SimpleToast.LONG, SimpleToast.CENTER);
+        }
+
         setloginFail(false);
         const user = res.data;
         authContext.setUser(user);
@@ -54,7 +61,11 @@ function LoginScreen({ navigation }) {
 
     // When click on forget password text
     const onForgetPasswordPress = () => {
-        console.log("Forget password button");
+        SimpleToast.showWithGravity("Chức năng đang phát triển!", SimpleToast.LONG, SimpleToast.CENTER);
+    }
+
+    const handleGoogle = () => {
+        SimpleToast.showWithGravity("Chức năng đang phát triển!", SimpleToast.LONG, SimpleToast.CENTER);
     }
 
     return(
@@ -110,6 +121,7 @@ function LoginScreen({ navigation }) {
                                 title="Đăng nhập với Google"
                                 icon="google-plus"
                                 background={color.google}
+                                onPress={handleGoogle}
                             />
                         </View>
                     </>
