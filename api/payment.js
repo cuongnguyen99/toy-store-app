@@ -11,9 +11,7 @@ const getBill = (accessToken) => {
     });
 }
 
-const createBill = (accessToken, cart, data, pay, total, onUploadProgress) => {
-    let random = Math.floor(Math.random()*100000)+ Math.floor(Math.random()*100000)
-    const paymentID = "PAYID-NONPREPAY-"+random;
+const createBill = (accessToken, paymentID, cart, data, pay, total, onUploadProgress) => {
     const address = {
         recipient_name: "John Doe",
         line1: "1 Main St",

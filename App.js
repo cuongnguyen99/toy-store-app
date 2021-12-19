@@ -7,6 +7,8 @@ import AuthContext from './auth/context';
 import AppNavigation from './navigations/AppNavigation';
 
 import {Category} from './components/lists';
+import Screen from './screens/Screen';
+import Paypal from './screens/Paypal';
 
 export default function App() {
   const [user, setUser] = useState();

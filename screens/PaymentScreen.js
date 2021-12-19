@@ -17,6 +17,7 @@ import UploadScreen from './UploadScreen';
 
 import cache from '../utility/cache';
 import usersApi from '../api/users';
+import Paypal from './Paypal';
 
 const validationSchema = Yup.object().shape({
     fullname: Yup.string().required('Vui lòng điền họ tên người nhận!'),
@@ -30,22 +31,48 @@ function PaymentScreen({route, navigation}) {
     const {cart, setCart} = useContext(CartContext);
     const {user, setUser} = useContext(AuthContext);
     const [uploadVisible, setUploadVisible] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [paymentID, setPaymentID] = useState("");
+    const [infor, setInfor] = useState({});
     const totalPay = route.params.total;
-    const prePay = 0;
+    const prePay = totalPay/2;
 
     const handleSubmit = async (data) => {
-        setProgress(0);
-        setUploadVisible(true);
+        
+        setShowModal(true);
+        setInfor(data);
+        console.log(infor);
+        
+    }
 
-        const accessToken = await cache.get("AccessToken");
+    const handleLoadEnd = async (syntheticEvent) => {
+        const { nativeEvent } = syntheticEvent;
+        const url = nativeEvent.url;
 
-        const result = await paymentApi.createBill(accessToken ,cart, data, prePay, totalPay, progress => setProgress(progress));
+        if(url) {
+            if(url.search("success")  > -1 ) {
+                setPaymentID(url.slice(url.search("=")+1,url.search("token")-1));
+                console.log(paymentID);
+                setShowModal(false);
 
-        if(!result.ok) {
-            console.log(result.originalError);
-            setUploadVisible(false);
-            return Toast.showWithGravity("Đã xảy ra lỗi! Vui lòng thử lại!", Toast.LONG, Toast.CENTER);
+                setProgress(0);
+                setUploadVisible(true);
+
+                const accessToken = await cache.get("AccessToken");
+
+                const result = await paymentApi.createBill(accessToken, paymentID ,cart, infor, prePay, totalPay, progress => setProgress(progress));
+
+                if(!result.ok) {
+                    console.log(result.originalError);
+                    setUploadVisible(false);
+                    return Toast.showWithGravity("Đã xảy ra lỗi! Vui lòng thử lại!", Toast.LONG, Toast.CENTER);
+                }
+            }
+            if(url.search("cancel") > -1) {
+                setShowModal(false);
+                return Toast.showWithGravity("Đã xảy ra lỗi khi thanh toán!", Toast.LONG, Toast.CENTER);
+            }
         }
     }
 
@@ -165,6 +192,11 @@ function PaymentScreen({route, navigation}) {
                 </>
             )}
         </Formik>
+        <Paypal 
+            visible={showModal}
+            pay={prePay}
+            handleLoadEnd={handleLoadEnd}
+        />
     </View>
     );
 }
