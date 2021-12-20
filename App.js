@@ -9,6 +9,7 @@ import AppNavigation from './navigations/AppNavigation';
 import {Category} from './components/lists';
 import Screen from './screens/Screen';
 import Paypal from './screens/Paypal';
+import SearchScreen from './screens/SearchScreen';
 
 export default function App() {
   const [user, setUser] = useState();

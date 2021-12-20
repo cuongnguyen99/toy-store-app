@@ -10,6 +10,8 @@ import PaymentScreen from '../screens/PaymentScreen';
 
 import cache from '../utility/cache';
 import userApi from '../api/users';
+import ListProductScreen from '../screens/ListProductScreen';
+import DetailProductScreen from '../screens/DetailProductScreen';
 
 const App = createNativeStackNavigator();
 
@@ -47,6 +49,11 @@ const AppNavigation = () => {
                         title: 'Thanh toán',
                         headerTitleAlign: 'center'
                     }}
+                />
+                <App.Screen name="DetailProduct" component={DetailProductScreen}
+                options={{
+                    headerShown: false,
+                }}
                 />
             </App.Navigator>
         </CartContext.Provider>

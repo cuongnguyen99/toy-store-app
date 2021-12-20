@@ -6,4 +6,8 @@ const getProductByCategory = (categoryId) => {
     return api.get(productById+"?category="+categoryId);
 }
 
-export default {getProductByCategory};
+const getProducts = () => {
+    return api.get(productById);
+}
+
+export default {getProductByCategory, getProducts};

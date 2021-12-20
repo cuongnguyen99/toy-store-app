@@ -8,6 +8,7 @@ import CategoryNavigation from './CategoryNavigation';
 import CartScreen from '../screens/CartScreen';
 import PaymentNavigation from './PaymentNavigation';
 import CategoryListScreen from '../screens/CategoryListScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +25,16 @@ function MainNavigation(props) {
               title: "Trang chủ",
               headerTitleAlign: 'center',
               tabBarIcon: ({focused}) => (<MaterialCommunityIcons color={color} name="home" size={30}
+                style={{
+                  color: focused ? color.primary : color.sub_text
+                }}
+              />),
+            }}
+          />
+          <Tab.Screen name="Search" component={SearchScreen}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({focused}) => (<MaterialCommunityIcons color={color} name="shopping-search" size={30}
                 style={{
                   color: focused ? color.primary : color.sub_text
                 }}
