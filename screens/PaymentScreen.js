@@ -38,11 +38,11 @@ function PaymentScreen({route, navigation}) {
     const totalPay = route.params.total;
     const prePay = totalPay/2;
 
-    const handleSubmit = async (data) => {
+    const handleSubmit = (data) => {
         
-        setShowModal(true);
         setInfor(data);
         console.log(infor);
+        setShowModal(true);
         
     }
 
@@ -155,6 +155,7 @@ function PaymentScreen({route, navigation}) {
                             onChangeText={text => setFieldValue("phone", text)}
                             value={values["phone"]}
                             onBlur={() => setFieldTouched("phone")}
+                            keyboardType="numeric"
                         />
                         <AppText style={styles.warning}>
                             {touched.phone && errors.phone ? errors.phone : null}

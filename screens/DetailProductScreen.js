@@ -21,9 +21,17 @@ function DetailProductScreen({title, price, desception, route, navigation}) {
     }
 
     const handleAddToCart = async (product) => {
+        const checkExist = cart.some(item => {
+            return item._id === product._id;
+        })
+
+        if(checkExist){
+            return SimpleToast.showWithGravity('Sản phẩm đã có trong giỏ hàng!', SimpleToast.SHORT, SimpleToast.CENTER);
+        }
+
         const newProduct = {...product, quantity: 1}
         const newCart = [...cart, newProduct];
-        
+
         setCart(newCart);
         userApi.addToCart(newCart, await cache.get("AccessToken"));
         SimpleToast.showWithGravity('Thêm vào giỏ hàng thành công!', SimpleToast.SHORT, SimpleToast.CENTER);

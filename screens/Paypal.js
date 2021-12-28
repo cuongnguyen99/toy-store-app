@@ -8,7 +8,7 @@ function Paypal({visible, pay, handleLoadEnd}) {
       visible={visible}
     >
       <WebView
-        source={{uri: `http://192.168.1.4:4000/api/paypal/${pay}`}}
+        source={{uri: `http://192.168.1.11:4000/api/paypal/${pay}`}}
         onLoadEnd={handleLoadEnd}
       />
     </Modal>

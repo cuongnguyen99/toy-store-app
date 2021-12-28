@@ -2,7 +2,9 @@ import {create} from 'apisauce';
 import cache from '../utility/cache';
 
 const api = create({
-    baseURL: 'http://192.168.1.4:4000/'
+    // baseURL: 'http://192.168.1.4:4000/'
+    baseURL: "http://192.168.1.11:4000/"
+
 });
 
 const get = api.get;
